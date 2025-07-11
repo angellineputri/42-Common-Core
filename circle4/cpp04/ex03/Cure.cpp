@@ -6,7 +6,7 @@
 /*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 20:51:04 by aputri-a          #+#    #+#             */
-/*   Updated: 2025/07/02 20:51:04 by aputri-a         ###   ########.fr       */
+/*   Updated: 2025/07/09 12:05:53 by aputri-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ Cure&	Cure::operator=(const Cure &other)
 {
 	std::cout << BLUE << "Cure copy assignment operator called" << RESET << std::endl;
 	if (this != &other)
-	{
 		AMateria::operator=(other);
-	}
 	return (*this);
 }
 
@@ -48,6 +46,7 @@ AMateria*	Cure::clone() const
 void	Cure::use(ICharacter& target)
 {
 	std::string	targetName;
+
 	try
 	{
 		targetName = target.getName();
@@ -57,5 +56,5 @@ void	Cure::use(ICharacter& target)
 		std::cout << "Unable to heal an invalid target" << std::endl;
 		return ;
 	}
-	std::cout << "Cure: \"* heals " << targetName << "'s wounds *\"" << std::endl;
+	std::cout << "* heals " << targetName << "'s wounds * " << std::endl;
 }

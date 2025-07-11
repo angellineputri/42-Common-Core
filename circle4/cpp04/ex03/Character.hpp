@@ -6,7 +6,7 @@
 /*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 20:50:51 by aputri-a          #+#    #+#             */
-/*   Updated: 2025/07/02 20:50:52 by aputri-a         ###   ########.fr       */
+/*   Updated: 2025/07/09 12:46:54 by aputri-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ class	Character : public ICharacter
 		void				equip(AMateria* m);
 		void				unequip(int idx);
 		void				use(int idx, ICharacter& target);
+		AMateria*			getMateria(int idx);
 
 	private:
 		std::string	name;

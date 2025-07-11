@@ -6,7 +6,7 @@
 /*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 20:51:07 by aputri-a          #+#    #+#             */
-/*   Updated: 2025/07/02 20:51:08 by aputri-a         ###   ########.fr       */
+/*   Updated: 2025/07/09 11:51:02 by aputri-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ class	Cure : public AMateria
 		~Cure();
 
 		Cure(const Cure& other);
-		Cure&	operator=(const Cure &other);
-
+		
 		AMateria*	clone() const;
 		void		use(ICharacter& target);
-
+		
 	private:
+		Cure&	operator=(const Cure &other);
 
 };
 

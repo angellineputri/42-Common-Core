@@ -6,7 +6,7 @@
 /*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 20:51:12 by aputri-a          #+#    #+#             */
-/*   Updated: 2025/07/02 20:51:13 by aputri-a         ###   ########.fr       */
+/*   Updated: 2025/07/09 12:05:41 by aputri-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,7 @@ Ice&	Ice::operator=(const Ice &other)
 {
 	std::cout << BLUE << "Ice copy assignment operator called" << RESET << std::endl;
 	if (this != &other)
-	{
 		AMateria::operator=(other);
-		return (*this);
-	}
 	return (*this);
 }
 
@@ -58,5 +55,5 @@ void	Ice::use(ICharacter& target)
 		std::cout << "Unable to shoots an ice bolt at an invalid target" << std::endl;
 		return ;
 	}
-	std::cout << "Ice: \"* shoots an ice bolt at " << targetName << "* \"" << std::endl;
+	std::cout << "* shoots an ice bolt at " << targetName << " *" << std::endl;
 }

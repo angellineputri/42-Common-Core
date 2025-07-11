@@ -6,7 +6,7 @@
 /*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 20:51:15 by aputri-a          #+#    #+#             */
-/*   Updated: 2025/07/02 20:51:15 by aputri-a         ###   ########.fr       */
+/*   Updated: 2025/07/09 11:51:13 by aputri-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ class	Ice : public AMateria
 		~Ice();
 
 		Ice(const Ice& other);
-		Ice&	operator=(const Ice &other);
-
+		
 		AMateria*	clone() const;
 		void		use(ICharacter& target);
-
+		
 	private:
+		Ice&	operator=(const Ice &other);
 
 };
 

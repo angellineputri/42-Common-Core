@@ -6,7 +6,7 @@
 /*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 20:50:49 by aputri-a          #+#    #+#             */
-/*   Updated: 2025/07/02 20:50:50 by aputri-a         ###   ########.fr       */
+/*   Updated: 2025/07/09 13:07:46 by aputri-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	Character::equip(AMateria* m)
 	if (size < 4)
 	{
 		inventory[size] = m;
+		std::cout << GREEN << "---Successfully equipped at idx " << size << RESET << std::endl;
 		size++;
 	}
 	else
@@ -100,13 +101,12 @@ void	Character::unequip(int idx)
 {
 	if (idx >= 0 && idx < size)
 	{
-		inventory[idx] = NULL;  // if you're the owner, delete the materia
+		inventory[idx] = NULL;
 		for (int i = idx; i < size - 1; ++i)
-		{
-			inventory[i] = inventory[i + 1];  // shift left
-		}
-		inventory[size - 1] = NULL;  // clear last
+			inventory[i] = inventory[i + 1];
+		inventory[size - 1] = NULL;
 		size--;
+		std::cout << RED << "---Successfully unequiped at idx " << idx << RESET << std::endl;
 	}
 	else
 	{
@@ -117,11 +117,15 @@ void	Character::unequip(int idx)
 void	Character::use(int idx, ICharacter& target)
 {
 	if (idx >= 0 && idx < size)
-	{
 		inventory[idx]->use(target);
-	}
 	else
-	{
 		std::cout << "Unable to use, idx is out of range! Size of inventory is " << size << " (note that idx is 0-3)" << std::endl;
-	}
+}
+
+AMateria*	Character::getMateria(int idx)
+{
+	if (idx >= 0 && idx < size)
+		return (inventory[idx]);
+	else
+		return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 20:49:40 by aputri-a          #+#    #+#             */
-/*   Updated: 2025/07/02 20:49:40 by aputri-a         ###   ########.fr       */
+/*   Updated: 2025/07/09 09:43:18 by aputri-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ class	Brain
 		Brain(const Brain& other);
 		Brain&	operator=(const Brain &other);
 
-		void			addIdea(std::string newIdea);
+		void			addIdea(std::string newIdea, int print);
 		std::string		getIdea(int i);
 
 	private:

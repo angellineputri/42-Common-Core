@@ -6,7 +6,7 @@
 /*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 20:51:25 by aputri-a          #+#    #+#             */
-/*   Updated: 2025/07/08 19:10:17 by aputri-a         ###   ########.fr       */
+/*   Updated: 2025/07/09 13:57:28 by aputri-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ void	MateriaSource::learnMateria(AMateria* m)
 	}
 	if (size < 4)
 	{
-		materiaLib[size] = m;
+		materiaLib[size] = m->clone();
+		delete m;
 		size++;
 	}
 	else

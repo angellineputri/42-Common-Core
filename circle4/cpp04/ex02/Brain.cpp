@@ -6,7 +6,7 @@
 /*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 20:50:15 by aputri-a          #+#    #+#             */
-/*   Updated: 2025/07/02 20:50:15 by aputri-a         ###   ########.fr       */
+/*   Updated: 2025/07/09 10:31:06 by aputri-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ Brain&	Brain::operator=(const Brain &other)
 	return (*this);
 }
 
-void	Brain::addIdea(std::string newIdea)
+void	Brain::addIdea(std::string newIdea, int print)
 {
 	if (size == 100)
 	{
@@ -52,7 +52,8 @@ void	Brain::addIdea(std::string newIdea)
 	}
 	
 	ideas[size] = newIdea;
-	std::cout << "New idea(" << newIdea << ") is added in index " << size << std::endl;
+	if (print)
+		std::cout << "New idea(" << newIdea << ") is added at index " << size << std::endl;
 	size++;
 }
 

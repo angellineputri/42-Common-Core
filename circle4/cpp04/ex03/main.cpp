@@ -6,7 +6,7 @@
 /*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 20:51:22 by aputri-a          #+#    #+#             */
-/*   Updated: 2025/07/08 19:08:00 by aputri-a         ###   ########.fr       */
+/*   Updated: 2025/07/09 14:32:21 by aputri-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,189 +15,232 @@
 #include "Cure.hpp"
 #include "Character.hpp"
 
-int	main()
-{	
-	IMateriaSource*	srcFull;
-	IMateriaSource* src;
-	AMateria* cureMateria;
-	AMateria* tmp;
+void	testIce()
+{
+	std::cout << std::endl << MAGENTA << "=====[1] Testing Materia Ice=====" << RESET << std::endl;
+	std::cout << MAGENTA << "testing constructor of ice" << RESET << std::endl;
+	AMateria *ice = new Ice();
+	std::cout << "type: " << ice->getType() << std::endl;
 
-	std::cout << MAGENTA << "[1] Test MateriaSource" << RESET << std::endl;
-	srcFull = new MateriaSource();
+	std::cout << std::endl << MAGENTA << "testing copy constructor of ice" << RESET << std::endl;
+	AMateria *ice_copy_constructor = new Ice(*dynamic_cast<Ice *>(ice));
+	std::cout << "memory address of ice: " << ice << std::endl;
+	std::cout << "memory address of ice_copy_constructor: " << ice_copy_constructor << std::endl;
+	std::cout << "type of ice_copy_constructor: " << ice_copy_constructor->getType() << std::endl;
+
+	std::cout << std::endl << MAGENTA << "testing clone function of ice" << RESET << std::endl;
+	AMateria *ice_clone = ice->clone();
+	std::cout << "memory address of ice: " << ice << std::endl;
+	std::cout << "memory address of ice_clone: " << ice_clone << std::endl;
+	std::cout << "type of ice_clone: " << ice_clone->getType() << std::endl;
+
+	std::cout << std::endl << MAGENTA << "testing use function of ice" << RESET << std::endl;
+	ICharacter *bob = new Character("bob");
+	ice->use(*bob);
+
+	std::cout << std::endl << MAGENTA << "destructor" << RESET << std::endl;
+	delete ice;
+	delete ice_copy_constructor;
+	delete ice_clone;
+	delete bob;	
+}
+
+void	testCure()
+{
+	std::cout << std::endl << MAGENTA << "=====[2] Testing Materia Cure=====" << RESET << std::endl;
+	std::cout << MAGENTA << "testing constructor of cure" << RESET << std::endl;
+	AMateria *cure = new Cure();
+	std::cout << "type: " << cure->getType() << std::endl;
+
+	std::cout << std::endl << MAGENTA << "testing copy constructor of cure" << RESET << std::endl;
+	AMateria *cure_copy_constructor = new Cure(*dynamic_cast<Cure *>(cure));
+	std::cout << "memory address of cure: " << cure << std::endl;
+	std::cout << "memory address of cure_copy_constructor: " << cure_copy_constructor << std::endl;
+	std::cout << "type of cure_copy_constructor: " << cure_copy_constructor->getType() << std::endl;
+
+	std::cout << std::endl << MAGENTA << "testing clone function of cure" << RESET << std::endl;
+	AMateria *cure_clone = cure->clone();
+	std::cout << "memory address of cure: " << cure << std::endl;
+	std::cout << "memory address of cure_clone: " << cure_clone << std::endl;
+	std::cout << "type of cure_clone: " << cure_clone->getType() << std::endl;
+
+	std::cout << std::endl << MAGENTA << "testing use function of cure" << RESET << std::endl;
+	ICharacter *bob = new Character("bob");
+	cure->use(*bob);
+
+	std::cout << std::endl << MAGENTA << "destructor" << RESET << std::endl;
+	delete cure;
+	delete cure_copy_constructor;
+	delete cure_clone;
+	delete bob;	
+}
+
+void	testCharacter()
+{
+	std::cout << std::endl << MAGENTA << "=====[3] Testing Character=====" << RESET << std::endl;
+	std::cout << MAGENTA << "testing constructor" << RESET << std::endl;
+	Character* bob = new Character("bob");
+	Character* stuart = new Character("stuart");
+	std::cout << "name: " << bob->getName() << std::endl;
+	std::cout << "name: " << stuart->getName() << std::endl;
+
+	std::cout << std::endl << MAGENTA << "testing equip()" << RESET << std::endl;
+	AMateria *ice = new Ice();
+	AMateria *cure = new Cure();
+	AMateria *anotherIce = new Ice();
+	AMateria *anotherCure = new Cure();
+	bob->equip(ice);
+	bob->equip(cure);
+	bob->equip(anotherIce);
+	bob->equip(anotherCure);
+	bob->equip(new Ice());
 	
-	std::cout << std::endl << MAGENTA << "Learning non existent materia" << RESET << std::endl;
-	srcFull->learnMateria(NULL);
+	std::cout << std::endl << MAGENTA << "testing unequip(), and use()" << RESET << std::endl;
+	bob->unequip(2);
+	bob->unequip(2);
+	bob->use(0, *stuart);
+	bob->use(1, *stuart);
+	bob->unequip(0);
+	bob->use(0, *stuart);
+	bob->use(1, *stuart);
 
-	std::cout << std::endl << MAGENTA << "Learning Materia and make it full to check" << RESET << std::endl;
-	for (int i = 0; i < 4; ++i)
-	{
-		if (i % 2 == 0)
-			srcFull->learnMateria(new Ice());
-		else
-			srcFull->learnMateria(new Cure());
-	}
-	srcFull->learnMateria(new Ice());
-
-	std::cout << std::endl << MAGENTA << "Test creating materia from empty materia library" << RESET << std::endl;
-	src = new MateriaSource();
-	tmp = src->createMateria("ice");
-	if (tmp == 0)
-		std::cout << YELLOW << "Test passed!" << RESET << std::endl;
-	else
-	{
-		std::cout << RED << "Test Failed!" << RESET << std::endl;
-		return (1);
-	}
+	std::cout << std::endl << MAGENTA << "testing copy constructor (address)" << RESET << std::endl;
+	Character *bob_copy_constructor = new Character(*bob);
+	std::cout << "memory address of bob: " << bob << std::endl;
+	std::cout << "memory address of bob_copy_constructor: " << bob_copy_constructor << std::endl;
 	
-	std::cout << std::endl << MAGENTA << "Test creating materia from a materia that hasn't been learnt yet" << RESET << std::endl;
-	cureMateria = new Cure();
-	src->learnMateria(cureMateria);
-	tmp = src->createMateria("ice");
-	if (tmp == 0)
-		std::cout << YELLOW << "Test passed!" << RESET << std::endl;
-	else
-	{
-		std::cout << RED << "Test Failed!" << RESET << std::endl;
-		return (1);
-	}
+	std::cout << std::endl << MAGENTA << "testing copy constructor (value)" << RESET << std::endl;
+	std::cout << "bob name: " << bob->getName() << std::endl;
+	std::cout << "bob_copy_constructor name: " << bob->getName() << std::endl;
+	bob_copy_constructor->use(1, *stuart);
+	bob_copy_constructor->equip(ice);
+	bob_copy_constructor->use(1, *stuart);
+	bob->use(1, *stuart);
+	bob_copy_constructor->unequip(1);
 
-	std::cout << std::endl << MAGENTA << "Test creating materia from a materia that is learnt, but in uppercase" << RESET << std::endl;
-	tmp = src->createMateria("Cure");
-	if (tmp == 0)
-		std::cout << YELLOW << "Test passed!" << RESET << std::endl;
-	else
-	{
-		std::cout << RED << "Test Failed!" << RESET << std::endl;
-		return (1);
-	}
+	std::cout << std::endl << MAGENTA << "testing copy assignment" << RESET << std::endl;
+	Character	*bob_copy_assg = new Character("bob_copy_assg");
+	bob_copy_assg->equip(ice);
 
-	std::cout << std::endl << MAGENTA << "Creating valid materia which is learnt" << RESET << std::endl;
-	tmp = src->createMateria("cure");
-	if (tmp && tmp->getType() == "cure")
-		std::cout << YELLOW << "Test passed!" << RESET << std::endl;
-	else
-	{
-		std::cout << RED << "Test Failed!" << RESET << std::endl;
-		return (1);
-	}
+	std::cout << std::endl << MAGENTA << "bob values" << RESET << std::endl;
+	std::cout << "bob name: " << bob->getName() << std::endl;
+	std::cout << "memory address of bob: " << bob << std::endl;
+	bob->use(0, *stuart);
+	bob->use(1, *stuart);
+
+	std::cout << std::endl << MAGENTA << "bob_copy_assg values before copying" << RESET << std::endl;
+	std::cout << "bob_copy_assg name before: " << bob_copy_assg->getName() << std::endl;
+	std::cout << "memory address of bob_copy_assg before: " << bob_copy_assg << std::endl;
+	bob_copy_assg->use(0, *stuart);
+
+	*bob_copy_assg = *bob;
+
+	std::cout << std::endl << MAGENTA << "bob_copy_assg values after copying" << RESET << std::endl;
+	std::cout << "bob_copy_assg name after: " << bob_copy_assg->getName() << std::endl;
+	std::cout << "memory address of bob_copy_assg after: " << bob_copy_assg << std::endl;
+	bob_copy_assg->use(0, *stuart);
+	bob_copy_assg->use(1, *stuart);
+	AMateria *tmp = bob_copy_assg->getMateria(0);
+	bob_copy_assg->unequip(0);
+
+	std::cout << std::endl << MAGENTA << "destructor" << RESET << std::endl;
+	delete anotherIce;
+	delete anotherCure;
 	delete tmp;
+	delete stuart;
+	delete bob;
+	delete bob_copy_constructor;
+	delete bob_copy_assg;
+}
 
-	std::cout << std::endl << MAGENTA << "Create deep copy of materiaSrc" << RESET << std::endl;
-	MateriaSource*	srcCopy = new MateriaSource(*dynamic_cast<MateriaSource*>(src));
+void	testMateriaSource()
+{
+	AMateria *tmp;
 
-	std::cout << std::endl << MAGENTA << "Check whether the copy is deep by learning ice in the original and try to create ice from the copy" << RESET << std::endl;
-	src->learnMateria(new Ice());
-
-	std::cout << "The original result: ";
-	tmp = src->createMateria("ice");
-
-	delete tmp;
-
-	std::cout << "The copy result: ";
-	tmp = srcCopy->createMateria("ice");
-
-	if (tmp == 0)
-		std::cout << YELLOW << "Test passed!" << RESET << std::endl;
-	else
-	{
-		std::cout << RED << "Test Failed!" << RESET << std::endl;
-		return (1);
-	}
-
-	std::cout << std::endl << MAGENTA << "[2] Test Character" << RESET << std::endl;
-	ICharacter* me = new Character("me");
-	ICharacter* bob = new Character("bob");
-	std::cout << std::endl << MAGENTA << "Check getName function of character" << RESET << std::endl;
-	if (me->getName() == "me")
-		std::cout << YELLOW << "Test passed!" << RESET << std::endl;
-	else
-	{
-		std::cout << RED << "Test Failed!" << RESET << std::endl;
-		return (1);
-	}
-	if (bob->getName() == "bob")
-		std::cout << YELLOW << "Test passed!" << RESET << std::endl;
-	else
-	{
-		std::cout << RED << "Test Failed!" << RESET << std::endl;
-		return (1);
-	}
-
-	std::cout << std::endl << MAGENTA << "Make an array of Materia for testing purposes" << RESET << std::endl;
-	AMateria* tmpArr[4];
-	for (int i = 0; i < 4; ++i)
-	{
-		if (i % 2 == 0)
-			tmpArr[i] = srcFull->createMateria("ice");
-		else
-			tmpArr[i] = srcFull->createMateria("cure");
-	}
-
-	std::cout << std::endl << MAGENTA << "Equip invalid materia" << RESET << std::endl;
-	me->equip(NULL);
-
-	std::cout << std::endl << MAGENTA << "Equip more materia when the inventory is already full" << RESET << std::endl;
-	for (int i = 0; i < 4; ++i)
-		me->equip(tmpArr[i]);
-	me->equip(new Cure());
-
-	std::cout << std::endl << MAGENTA << "Unequip valid materia and making sure its not being deleted" << RESET << std::endl;
-	me->unequip(1); // unequip cure, so it should be (ice, ice, cure) now
-	if (tmpArr[1])
-		std::cout << YELLOW << "Test passed!" << RESET << std::endl;
-	else
-	{
-		std::cout << RED << "Test Failed!" << RESET << std::endl;
-		return (1);
-	}
-
-	std::cout << std::endl << MAGENTA << "Unequip invalid materia" << RESET << std::endl;
-	me->unequip(3);
-	me->unequip(4);
-	me->unequip(-1);
-
-	std::cout << std::endl << MAGENTA << "Use valid materia, should be [ice, ice, cure]" << RESET << std::endl;
+	std::cout << std::endl << MAGENTA << "=====[4] Testing MateriaSource=====" << RESET << std::endl;
+	std::cout << MAGENTA << "testing constructor" << RESET << std::endl;
+	MateriaSource* source = new MateriaSource();
+	
+	std::cout << std::endl << MAGENTA << "testing learnMateria and createMateria" << RESET << std::endl;
+	source->learnMateria(NULL);
+	source->learnMateria(new Ice());
+	tmp = source->createMateria("Cure");
 	for (int i = 0; i < 3; ++i)
 	{
-		me->use(i, *bob);
+		if (i % 2 == 1)
+			source->learnMateria(new Ice());
+		else
+			source->learnMateria(new Cure());
 	}
 
-	std::cout << std::endl << MAGENTA << "Use invalid materia" << RESET << std::endl;
-	me->use(3, *bob);
-	me->use(4, *bob);
-	me->use(-1, *bob);
+	std::cout << std::endl << MAGENTA << "testing learnMateria if already full" << RESET << std::endl;
+	source->learnMateria(new Ice());
 
-	std::cout << std::endl << MAGENTA << "Create deep copy of character and test whether the copy still save the unequiped materia of the real one" << RESET << std::endl;
-	Character*	charCopy = new Character(*dynamic_cast<Character*>(me));
-	me->unequip(2);
+	std::cout << std::endl << MAGENTA << "testing createMateria" << RESET << std::endl;
+	tmp = source->createMateria("Ice");
+	tmp = source->createMateria("Cure");
+	tmp = source->createMateria("ice");
+	std::cout << "created: " << tmp->getType() << std::endl;
+	delete tmp;
+	tmp = source->createMateria("cure");
+	std::cout << "created: " << tmp->getType() << std::endl;
+	delete tmp;
 
-	std::cout << "The original result of using index 3 : ";
-	me->use(2, *bob);
+	std::cout << std::endl << MAGENTA << "testing copy constructor (address)" << RESET << std::endl;
+	MateriaSource *src_copy_constructor = new MateriaSource(*source);
+	std::cout << "memory address of source: " << source << std::endl;
+	std::cout << "memory address of src_copy_constructor: " << src_copy_constructor << std::endl;
+	
+	std::cout << std::endl << MAGENTA << "testing copy constructor (value)" << RESET << std::endl;
+	tmp = src_copy_constructor->createMateria("cure");
+	std::cout << "created: " << tmp->getType() << std::endl;
+	delete tmp;
+	tmp = src_copy_constructor->createMateria("ice");
+	std::cout << "created: " << tmp->getType() << std::endl;
+	delete tmp;
 
-	std::cout << "The copy result of using index 3: ";
-	charCopy->use(2, *bob);
+	std::cout << std::endl << MAGENTA << "testing copy assignment" << RESET << std::endl;
+	MateriaSource	*ice_source = new MateriaSource();
+	ice_source->learnMateria(new Ice());
 
-	std::cout << std::endl << "delete srcFull" << std::endl;
-	delete srcFull;
+	MateriaSource	*src_copy_assg = new MateriaSource();
+	src_copy_assg->learnMateria(new Cure());
 
-	std::cout << std::endl << "delete src" << std::endl;
-	delete src;
+	std::cout << std::endl << MAGENTA << "ice_source values" << RESET << std::endl;
+	std::cout << "memory address of ice_source: " << ice_source << std::endl;
+	tmp = ice_source->createMateria("cure");
+	tmp = ice_source->createMateria("ice");
+	std::cout << "created: " << tmp->getType() << std::endl;
+	delete tmp;
 
-	std::cout << std::endl << "delete srcCopy" << std::endl;
-	delete srcCopy;
+	std::cout << std::endl << MAGENTA << "src_copy_assg values before copying" << RESET << std::endl;
+	std::cout << "memory address of src_copy_assg before: " << src_copy_assg << std::endl;
+	tmp = src_copy_assg->createMateria("cure");
+	std::cout << "created: " << tmp->getType() << std::endl;
+	delete tmp;
+	tmp = src_copy_assg->createMateria("ice");
 
-	std::cout << std::endl << "delete bob" << std::endl;
-	delete bob;
+	
+	std::cout << std::endl << MAGENTA << "src_copy_assg values after copying" << RESET << std::endl;
+	*src_copy_assg = *ice_source;
+	std::cout << "memory address of src_copy_assg after: " << src_copy_assg << std::endl;
+	tmp = src_copy_assg->createMateria("cure");
+	tmp = src_copy_assg->createMateria("ice");
+	std::cout << "created: " << tmp->getType() << std::endl;
+	delete tmp;
+	
+	std::cout << std::endl << MAGENTA << "destructor" << RESET << std::endl;
+	delete source;
+	delete src_copy_constructor;
+	delete src_copy_assg;
+	delete ice_source;
+}
 
-	std::cout << std::endl << "delete me" << std::endl;
-	delete me;
-
-	std::cout << std::endl << "delete charCopy" << std::endl;
-	delete charCopy;
-
-	std::cout << std::endl << "delete unequiped materia" << std::endl;
-	delete tmpArr[1];
-	delete tmpArr[3];
-
+int	main()
+{
+	testIce();
+	testCure();
+	testCharacter();
+	testMateriaSource();
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 20:50:47 by aputri-a          #+#    #+#             */
-/*   Updated: 2025/07/08 16:11:54 by aputri-a         ###   ########.fr       */
+/*   Updated: 2025/07/09 12:21:33 by aputri-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,11 @@ class	AMateria
 		
 		std::string const&	getType() const;
 		virtual AMateria*	clone() const = 0;
-		virtual void		use(ICharacter& target) = 0;
+		virtual void		use(ICharacter& target);
 		
 	protected:
 		AMateria&	operator=(const AMateria &other);
 		std::string	type;
-
 };
 
 #endif

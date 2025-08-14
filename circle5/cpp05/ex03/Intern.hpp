@@ -16,20 +16,21 @@ class	Intern
 		~Intern();
 
 		Intern(const Intern& other);
-		Intern&		operator=(const Intern &other);
-
+		
 		AForm*	makeForm(std::string name, std::string target);
-
+		
 		class InvalidFormType : public std::exception
 		{
 			public:
-				const char* what() const _NOEXCEPT;
+			const char* what() const _NOEXCEPT;
 		};
-
+		
 	private:
-		AForm*	makeShrubberyForm(const std::string& target);
-		AForm*	makeRobotomyForm(const std::string& target);
-		AForm*	makePresidentialForm(const std::string& target);
+		Intern&		operator=(const Intern &other);
+		AForm*		makeShrubberyForm(const std::string& target);
+		AForm*		makeRobotomyForm(const std::string& target);
+		AForm*		makePresidentialForm(const std::string& target);
+		std::string	strToLower(const std::string& str);
 };
 
 #endif

@@ -3,29 +3,29 @@
 ShrubberyCreationForm::ShrubberyCreationForm()
 : AForm("ShrubberyCreationForm", 145, 137), target("default")
 {
-	// std::cout << GREEN << "ShrubberyCreationForm default constructor called" << RESET << std::endl;
+	std::cout << GREEN << "ShrubberyCreationForm target \'" << target << "\' default constructor called (gradeToSign: \'" << getGradeToSign() << "\' & gradeToExecute: \'" << getGradeToExecute() << "\')" << RESET << std::endl;
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(std::string _target)
-: AForm("ShrubberyCreationForm", 145, 137), target(_target)
+: AForm("ShrubberyCreationForm", 145, 137), target(resolveName(_target))
 {
-	// std::cout << GREEN << "ShrubberyCreationForm " << name << " constructor called" << RESET << std::endl;
+	std::cout << GREEN << "ShrubberyCreationForm target \'" << target << "\' constructor called (gradeToSign: \'" << getGradeToSign() << "\' & gradeToExecute: \'" << getGradeToExecute() << "\')" << RESET << std::endl;
 }
 
 ShrubberyCreationForm::~ShrubberyCreationForm()
 {
-	// std::cout << RED << "ShrubberyCreationForm destructor called" << RESET << std::endl;
+	std::cout << RED << "ShrubberyCreationForm target \'" << target << "\' destructor called" << RESET << std::endl;
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& other)
 : AForm(other), target(other.target)
 {
-	// std::cout << BLUE << "ShrubberyCreationForm copy constructor called" << RESET << std::endl;
+	std::cout << BLUE << "ShrubberyCreationForm copy constructor called" << RESET << std::endl;
 }
 
 ShrubberyCreationForm&	ShrubberyCreationForm::operator=(const ShrubberyCreationForm &other)
 {
-	// std::cout << BLUE << "ShrubberyCreationForm copy assignment operator called" << RESET << std::endl;
+	std::cout << BLUE << "ShrubberyCreationForm copy assignment operator called" << RESET << std::endl;
 	if (this != &other)
 	{
 		AForm::operator=(other);
@@ -33,7 +33,7 @@ ShrubberyCreationForm&	ShrubberyCreationForm::operator=(const ShrubberyCreationF
 	return (*this);
 }
 
-std::string	ShrubberyCreationForm::getTarget() const
+const std::string	ShrubberyCreationForm::getTarget() const
 {
 	return (target);
 }
@@ -43,6 +43,7 @@ void	ShrubberyCreationForm::executeAction(Bureaucrat const & executor) const
 	std::ofstream	outfile;
 	std::string		outfilename = target + "_shrubbery";
 
+	std::cout << "Bureaucrat " << executor.getName() << " will now try to draw an ASCII tree!" << std::endl;
 	outfile.open(outfilename);
 	if (!outfile.is_open())
 		throw std::runtime_error("Could not open file \"" + outfilename + "\"");
@@ -60,6 +61,7 @@ void	ShrubberyCreationForm::executeAction(Bureaucrat const & executor) const
 			<< "   .....//||||\\....\n" << std::endl;
 
 	outfile.close();
+	std::cout << "Bureaucrat " << executor.getName() << " mission is successful!" << std::endl;
 }
 
 std::ostream&	operator<<(std::ostream& out, const ShrubberyCreationForm& shrubberyCreationForm)

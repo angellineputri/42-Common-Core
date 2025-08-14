@@ -3,13 +3,13 @@
 Form::Form()
 : name("default"), gradeToSign(150), gradeToExecute(150), isSigned(false)
 {
-	// std::cout << GREEN << "Form default constructor called" << RESET << std::endl;
+	std::cout << GREEN << "Form default constructor called (gradeToSign: \'" << gradeToSign << "\' & gradeToExecute: \'" << gradeToExecute << "\')" << RESET << std::endl;
 }
 
 Form::Form(std::string _name, int _gradeToSign, int _gradeToExecute)
-: name(_name.empty() ? "default" : _name), gradeToSign(_gradeToSign), gradeToExecute(_gradeToExecute)
+: name(resolveName(_name)), gradeToSign(_gradeToSign), gradeToExecute(_gradeToExecute)
 {
-	// std::cout << GREEN << "Form " << name << " constructor called" << RESET << std::endl;
+	std::cout << GREEN << "Form \'" << name << "\' (gradeToSign: \'" << gradeToSign << "\' & gradeToExecute: \'" << gradeToExecute << "\') constructor called" << RESET << std::endl;
 	if (gradeToSign < 1)
 		throw GradeTooHighException();
 	else if (gradeToSign > 150)
@@ -22,18 +22,18 @@ Form::Form(std::string _name, int _gradeToSign, int _gradeToExecute)
 
 Form::~Form()
 {
-	// std::cout << RED << "Form destructor called" << RESET << std::endl;
+	std::cout << RED << "Form \'" << name << "\' destructor called" << RESET << std::endl;
 }
 
 Form::Form(const Form& other)
 : name(other.name), gradeToSign(other.gradeToSign), gradeToExecute(other.gradeToExecute), isSigned(other.isSigned)
 {
-	// std::cout << BLUE << "Form copy constructor called" << RESET << std::endl;
+	std::cout << BLUE << "Form copy constructor called" << RESET << std::endl;
 }
 
 Form&	Form::operator=(const Form &other)
 {
-	// std::cout << BLUE << "Form copy assignment operator called" << RESET << std::endl;
+	std::cout << BLUE << "Form copy assignment operator called" << RESET << std::endl;
 	if (this != &other)
 	{
 		isSigned = other.isSigned;
@@ -51,12 +51,12 @@ bool	Form::getIsSigned() const
 	return (isSigned);
 }
 
-const int	Form::getGradeToSign() const
+int	Form::getGradeToSign() const
 {
 	return (gradeToSign);
 }
 
-const int	Form::getGradeToExecute() const
+int	Form::getGradeToExecute() const
 {
 	return (gradeToExecute);
 }
@@ -64,7 +64,11 @@ const int	Form::getGradeToExecute() const
 void	Form::beSigned(Bureaucrat& bureaucrat)
 {
 	if (bureaucrat.getGrade() <= gradeToSign)
+	{
+		if (isSigned == true)
+			throw FormIsAlreadySignedException();
 		isSigned = true;
+	}
 	else
 		throw GradeTooLowException();
 }
@@ -79,6 +83,11 @@ const char* Form::GradeTooLowException::what() const _NOEXCEPT
 	return ("Grade too low!");
 }
 
+const char* Form::FormIsAlreadySignedException::what() const _NOEXCEPT
+{
+	return ("The form is already signed!");
+}
+
 std::ostream&	operator<<(std::ostream& out, const Form& form)
 {
 	out << "form name: " << form.getName() << " ";
@@ -89,4 +98,11 @@ std::ostream&	operator<<(std::ostream& out, const Form& form)
 	out << "grade to sign: " << form.getGradeToSign() << ", grade to execute: " << form.getGradeToExecute();
 
 	return (out);
+}
+
+std::string	Form::resolveName(std::string name)
+{
+	if (name.empty())
+		return ("default");
+	return (name);
 }

@@ -9,58 +9,95 @@
 #define BLUE	"\033[34m"
 #define MAGENTA	"\033[35m"
 
-void	test(bool condition)
+AForm	**test_intern()
 {
-	if (condition)
-		std::cout << GREEN << "Test Passed!" << RESET << std::endl;
-	else
+	std::cout << MAGENTA << std::endl << "[1] Check intern constructor" << RESET << std::endl;
+	Intern* intern = new Intern();
+	std::string formType[5] = {"shrubbery creation", "ROBOTOMY REQUEST", "PreSidENtiAL pARDon", "PRESIDENTIAL PARD0N", ""};
+	AForm** form = new AForm*[5];
+	
+	std::cout << MAGENTA << std::endl << "[2] check makeForm()" << RESET << std::endl;
+	for (int i = 0; i < 5; ++i)
 	{
-		std::cout << RED << "Test Failed!" << RESET << std::endl;
-		std::exit(1);
+		form[i] = NULL;
+		try
+		{
+			if (i == 1)
+				form[i] = intern->makeForm(formType[i], "");
+			else
+				form[i] = intern->makeForm(formType[i], "target" + std::to_string(i + 1));
+			std::cout << std::endl;
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << RED << "Error: " << e.what() << RESET << std::endl << std::endl;
+			form[i] = NULL;
+		}
 	}
+
+	std::cout << MAGENTA << std::endl << "printing form with the << operator" << RESET << std::endl;
+	for (int i = 0; i < 5; ++i)
+	{
+		if (form[i])
+			std::cout << *form[i] << std::endl;
+	}
+
+	return (form);
+}
+
+void test_form_sign_and_execute(AForm **form)
+{
+	std::cout << MAGENTA << std::endl << "/// preparing bureaucrat ///" << RESET << std::endl;
+	Bureaucrat* worstBureau = new Bureaucrat("worst", 150);
+	Bureaucrat* bestBureau = new Bureaucrat("best", 1);
+
+	std::cout << MAGENTA << std::endl << "[3] Check whether forms can be executed without being signed" << RESET << std::endl;
+	for (int i = 0; i < 3; ++i)
+	{
+		bestBureau->executeForm(*form[i]);
+	}
+
+	std::cout << MAGENTA << std::endl << "/// sign all forms ///" << RESET << std::endl;
+	for (int i = 0; i < 3; ++i)
+	{
+		bestBureau->signForm(*form[i]);
+	}
+
+	std::cout << MAGENTA << std::endl << "[4] Check whether forms can be executed by an competent bureaucrat" << RESET << std::endl;
+	for (int i = 0; i < 3; ++i)
+	{
+		worstBureau->executeForm(*form[i]);
+	}
+
+	std::cout << MAGENTA << std::endl << "[5] Check whether forms can be executed by a competent bureaucrat" << RESET << std::endl;
+	for (int i = 0; i < 3; ++i)
+	{
+		bestBureau->executeForm(*form[i]);
+		if (i == 1)
+		{
+			for (int j = 0; j < 5; ++j)
+				bestBureau->executeForm(*form[i]);
+		}
+		std::cout << std::endl;
+	}
+}
+
+void clean_up(AForm** form, int size)
+{
+    for (int i = 0; i < size; ++i)
+    {
+        if (form[i])
+        {
+            delete form[i];
+            form[i] = NULL;
+        }
+    }
 }
 
 int	main()
 {
-	std::cout << BLUE << "///// Test intern /////" << RESET << std::endl;
-	std::cout << MAGENTA << "[1] Check intern makeForm function with valid form type" << RESET << std::endl;
-	Intern* intern = new Intern();
-	std::string formType[3] = {"ShrubberyCreationForm", "RobotomyRequestForm", "PresidentialPardonForm"};
-	AForm* form[3];
-	
-	for (int i = 0; i < 3; ++i)
-	{
-		form[i] = NULL;
-		try
-		{
-			form[i] = intern->makeForm(formType[i], "target" + std::to_string(i + 1));
-			test(form[i] && form[i]->getName() == formType[i] && form[i]->getTarget() == "target" + std::to_string(i + 1));
-		}
-		catch(const std::exception& e)
-		{
-			test(0);
-		}
-	}
-
-	for (int i = 0; i < 3; ++i)
-		delete form[i];
-
-	std::cout << std::endl << MAGENTA << "[2] Check intern makeForm function with invalid form type" << RESET << std::endl;
-	std::string invalidFormType[3] = {"shrubberycreationform", "OtherTypeOfForm", ""};
-	for (int i = 0; i < 3 ; ++i)
-	{
-		form[i] = NULL;
-		try
-		{
-			form[i] = intern->makeForm(invalidFormType[i], "target" + std::to_string(i + 1));
-			test(0);
-		}
-		catch(const std::exception& e)
-		{
-			std::cerr << e.what() << std::endl;
-			test(form[i] == NULL);
-		}
-	}
-
+	AForm** form = test_intern();
+	test_form_sign_and_execute(form);
+	clean_up(form, 5);
 	return (0);
 }

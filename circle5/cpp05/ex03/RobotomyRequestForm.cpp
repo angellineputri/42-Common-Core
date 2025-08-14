@@ -3,29 +3,29 @@
 RobotomyRequestForm::RobotomyRequestForm()
 : AForm("RobotomyRequestForm", 72, 45), target("default")
 {
-	// std::cout << GREEN << "RobotomyRequestForm default constructor called" << RESET << std::endl;
+	std::cout << GREEN << "RobotomyRequestForm target \'" << target << "\' default constructor called (gradeToSign: \'" << getGradeToSign() << "\' & gradeToExecute: \'" << getGradeToExecute() << "\')" << RESET << std::endl;
 }
 
 RobotomyRequestForm::RobotomyRequestForm(std::string _target)
-: AForm("RobotomyRequestForm", 72, 45), target(_target)
+: AForm("RobotomyRequestForm", 72, 45), target(resolveName(_target))
 {
-	// std::cout << GREEN << "RobotomyRequestForm " << name << " constructor called" << RESET << std::endl;
+	std::cout << GREEN << "RobotomyRequestForm target \'" << target << "\' constructor called (gradeToSign: \'" << getGradeToSign() << "\' & gradeToExecute: \'" << getGradeToExecute() << "\')" << RESET << std::endl;
 }
 
 RobotomyRequestForm::~RobotomyRequestForm()
 {
-	// std::cout << RED << "RobotomyRequestForm destructor called" << RESET << std::endl;
+	std::cout << RED << "RobotomyRequestForm target \'" << target << "\' destructor called" << RESET << std::endl;
 }
 
 RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& other)
 : AForm(other), target(other.target)
 {
-	// std::cout << BLUE << "RobotomyRequestForm copy constructor called" << RESET << std::endl;
+	std::cout << BLUE << "RobotomyRequestForm copy constructor called" << RESET << std::endl;
 }
 
 RobotomyRequestForm&	RobotomyRequestForm::operator=(const RobotomyRequestForm &other)
 {
-	// std::cout << BLUE << "RobotomyRequestForm copy assignment operator called" << RESET << std::endl;
+	std::cout << BLUE << "RobotomyRequestForm copy assignment operator called" << RESET << std::endl;
 	if (this != &other)
 	{
 		AForm::operator=(other);
@@ -33,7 +33,7 @@ RobotomyRequestForm&	RobotomyRequestForm::operator=(const RobotomyRequestForm &o
 	return (*this);
 }
 
-std::string	RobotomyRequestForm::getTarget() const
+const std::string	RobotomyRequestForm::getTarget() const
 {
 	return (target);
 }
@@ -42,6 +42,7 @@ void	RobotomyRequestForm::executeAction(Bureaucrat const & executor) const
 {
 	int robotomized = rand() % 2;
 
+	std::cout << "Bureaucrat " << executor.getName() << " will now try to robotomize " << target << "!" << std::endl;
 	std::cout << "* drilling noises *" << std::endl;
 	if (robotomized)
 		std::cout << "Target \"" << target << "\" has been robotomized" << std::endl;

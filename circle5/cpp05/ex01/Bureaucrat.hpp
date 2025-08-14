@@ -6,6 +6,13 @@
 #include <string>
 #include "Form.hpp"
 
+#define RESET	"\033[0m"
+#define RED		"\033[31m"
+#define GREEN	"\033[32m"
+#define YELLOW	"\033[33m"
+#define BLUE	"\033[34m"
+#define MAGENTA	"\033[35m"
+
 class	Form;
 
 class	Bureaucrat
@@ -24,7 +31,7 @@ class	Bureaucrat
 		void				incrementGrade();
 		void				decrementGrade();
 
-		void				signForm(Form* form);
+		void				signForm(Form& form);
 
 		class GradeTooHighException : public std::exception
 		{
@@ -41,6 +48,7 @@ class	Bureaucrat
 	private:
 		const std::string	name;
 		int					grade;
+		std::string			resolveName(std::string name);
 
 };
 

@@ -20,8 +20,8 @@ class	Form
 
 		const std::string	getName() const;
 		bool				getIsSigned() const;
-		const int			getGradeToSign() const;
-		const int			getGradeToExecute() const;
+		int					getGradeToSign() const;
+		int					getGradeToExecute() const;
 
 		void				beSigned(Bureaucrat& bureaucrat);
 
@@ -37,12 +37,18 @@ class	Form
 				const char* what() const _NOEXCEPT;
 		};
 
+		class FormIsAlreadySignedException : public std::exception
+		{
+			public:
+				const char* what() const _NOEXCEPT;
+		};
+
 	private:
 		const std::string	name;
 		const int			gradeToSign;
 		const int			gradeToExecute;
 		bool				isSigned;
-
+		std::string			resolveName(std::string name);
 };
 
 std::ostream&	operator<<(std::ostream& out, const Form& form);

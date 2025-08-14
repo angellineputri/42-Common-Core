@@ -2,22 +2,23 @@
 
 Intern::Intern()
 {
-	// std::cout << GREEN << "Intern default constructor called" << RESET << std::endl;
+	std::cout << GREEN << "Intern default constructor called" << RESET << std::endl;
 }
 
 Intern::~Intern()
 {
-	// std::cout << RED << "Intern destructor called" << RESET << std::endl;
+	std::cout << RED << "Intern destructor called" << RESET << std::endl;
 }
 
 Intern::Intern(const Intern& other)
 {
-	// std::cout << BLUE << "Intern copy constructor called" << RESET << std::endl;
+	std::cout << BLUE << "Intern copy constructor called" << RESET << std::endl;
+	(void)other;
 }
 
 Intern&	Intern::operator=(const Intern &other)
 {
-	// std::cout << BLUE << "Intern copy assignment operator called" << RESET << std::endl;
+	std::cout << BLUE << "Intern copy assignment operator called" << RESET << std::endl;
 	if (this != &other)
 	{
 		return (*this);
@@ -42,13 +43,14 @@ AForm*	Intern::makePresidentialForm(const std::string& target)
 
 AForm*	Intern::makeForm(std::string name, std::string target)
 {
+	name = strToLower(name);
 	AForm*		(Intern::*action[3])(const std::string& target) = {
 		&Intern::makeShrubberyForm,
 		&Intern::makeRobotomyForm,
 		&Intern::makePresidentialForm
 	};
 
-	std::string	formType[3] = {"ShrubberyCreationForm", "RobotomyRequestForm", "PresidentialPardonForm"};
+	std::string	formType[3] = {"shrubbery creation", "robotomy request", "presidential pardon"};
 	int i = 0;
 	while (i < 3)
 	{
@@ -56,8 +58,8 @@ AForm*	Intern::makeForm(std::string name, std::string target)
 		{
 			try
 			{
+				std::cout << "Intern creates \'" << name << "\' form" << std::endl;
 				AForm*	newForm = (this->*action[i])(target);
-				std::cout << "Intern creates " << name << std::endl;
 				return (newForm);
 			}
 			catch(const std::exception& e)
@@ -75,4 +77,14 @@ AForm*	Intern::makeForm(std::string name, std::string target)
 const char* Intern::InvalidFormType::what() const _NOEXCEPT
 {
 	return ("Invalid form type!");
+}
+
+std::string	Intern::strToLower(const std::string& str)
+{
+	std::string result = str;
+
+	for (size_t i = 0; i < result.size(); ++i) {
+		result[i] = std::tolower(static_cast<unsigned char>(result[i]));
+	}
+	return (result);
 }

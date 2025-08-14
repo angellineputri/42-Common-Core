@@ -18,14 +18,13 @@ class	AForm
 		AForm(const AForm& other);
 		AForm&		operator=(const AForm &other);
 
-		const std::string	getName() const;
-		bool				getIsSigned() const;
-		const int			getGradeToSign() const;
-		const int			getGradeToExecute() const;
-		virtual std::string	getTarget() const = 0;
+		const std::string			getName() const;
+		bool						getIsSigned() const;
+		int							getGradeToSign() const;
+		int							getGradeToExecute() const;
+		virtual const std::string	getTarget() const = 0;
 
 		void				beSigned(Bureaucrat& bureaucrat);
-
 		virtual void		execute(Bureaucrat const & executor) const;
 		virtual void		executeAction(Bureaucrat const & executor) const = 0;
 
@@ -47,7 +46,7 @@ class	AForm
 				const char* what() const _NOEXCEPT;
 		};
 
-		class FormAlreadySignedException : public std::exception
+		class FormIsAlreadySignedException : public std::exception
 		{
 			public:
 				const char* what() const _NOEXCEPT;
@@ -59,6 +58,8 @@ class	AForm
 		const int			gradeToExecute;
 		bool				isSigned;
 
+	protected:
+		std::string			resolveName(std::string name);
 };
 
 std::ostream&	operator<<(std::ostream& out, const AForm& aForm);

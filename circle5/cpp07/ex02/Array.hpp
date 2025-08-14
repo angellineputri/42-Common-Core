@@ -2,6 +2,7 @@
 # define ARRAY_HPP
 
 #include <iostream>
+#include <exception>
 
 #define RESET	"\033[0m"
 #define RED		"\033[31m"
@@ -20,14 +21,14 @@ class Array
 
         Array(const Array& other);
         Array&  operator=(const Array &other);
-        T&      operator[](unsigned int i);
+        T&      operator[](unsigned int i) const;
 
         unsigned int    size() const;
 
         class InvalidIndexException : public std::exception
 		{
 			public:
-				const char* what() const _NOEXCEPT;
+				const char* what() const throw();
 		};
 
     private:

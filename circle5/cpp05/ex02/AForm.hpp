@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   AForm.hpp                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/14 15:37:25 by aputri-a          #+#    #+#             */
+/*   Updated: 2025/08/14 15:38:20 by aputri-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #pragma once
 #ifndef AFORM_HPP
 #define AFORM_HPP
 
 #include <iostream>
 #include <string>
+#include <exception>
 #include "Bureaucrat.hpp"
 
 class	Bureaucrat;
@@ -31,25 +44,25 @@ class	AForm
 		class GradeTooHighException : public std::exception
 		{
 			public:
-				const char* what() const _NOEXCEPT;
+				const char* what() const throw();
 		};
 
 		class GradeTooLowException : public std::exception
 		{
 			public:
-				const char* what() const _NOEXCEPT;
+				const char* what() const throw();
 		};
 
 		class FormNotSignedException : public std::exception
 		{
 			public:
-				const char* what() const _NOEXCEPT;
+				const char* what() const throw();
 		};
 
 		class FormIsAlreadySignedException : public std::exception
 		{
 			public:
-				const char* what() const _NOEXCEPT;
+				const char* what() const throw();
 		};
 
 	private:

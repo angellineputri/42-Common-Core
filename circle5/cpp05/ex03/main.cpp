@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/14 15:39:52 by aputri-a          #+#    #+#             */
+/*   Updated: 2025/08/14 15:39:52 by aputri-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <sstream>
 #include "Bureaucrat.hpp"
 #include "Intern.hpp"
@@ -25,7 +37,7 @@ AForm	**test_intern()
 			if (i == 1)
 				form[i] = intern->makeForm(formType[i], "");
 			else
-				form[i] = intern->makeForm(formType[i], "target" + std::to_string(i + 1));
+				form[i] = intern->makeForm(formType[i], "target");
 			std::cout << std::endl;
 		}
 		catch(const std::exception& e)
@@ -42,6 +54,7 @@ AForm	**test_intern()
 			std::cout << *form[i] << std::endl;
 	}
 
+	delete intern;
 	return (form);
 }
 
@@ -80,6 +93,9 @@ void test_form_sign_and_execute(AForm **form)
 		}
 		std::cout << std::endl;
 	}
+
+	delete worstBureau;
+	delete bestBureau;
 }
 
 void clean_up(AForm** form, int size)
@@ -92,6 +108,8 @@ void clean_up(AForm** form, int size)
             form[i] = NULL;
         }
     }
+
+	delete [] form;
 }
 
 int	main()

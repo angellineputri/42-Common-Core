@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Intern.hpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/14 15:39:49 by aputri-a          #+#    #+#             */
+/*   Updated: 2025/08/14 15:39:50 by aputri-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #pragma once
 #ifndef INTERN_HPP
 #define INTERN_HPP
@@ -22,7 +34,7 @@ class	Intern
 		class InvalidFormType : public std::exception
 		{
 			public:
-			const char* what() const _NOEXCEPT;
+			const char* what() const throw();
 		};
 		
 	private:

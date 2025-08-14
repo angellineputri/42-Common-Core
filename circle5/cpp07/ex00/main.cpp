@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/14 16:47:26 by aputri-a          #+#    #+#             */
+/*   Updated: 2025/08/14 16:47:28 by aputri-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "whatever.hpp"
 
 #define RESET	"\033[0m"
@@ -18,7 +30,7 @@ int main()
 
     std::cout << BLUE << "[2] Test min and max function for int" << RESET << std::endl;
     std::cout << "min(a, b) = " << ::min( a, b ) << std::endl;
-    std::cout << "max(a, b) = " << ::max( a, b ) << std::endl;
+    std::cout << "max(a, b) = " << ::max( a, b ) << std::endl << std::endl;
 
 
     std::string c = "chaine1";

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/14 15:35:39 by aputri-a          #+#    #+#             */
+/*   Updated: 2025/08/14 15:35:39 by aputri-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <sstream>
 #include "Bureaucrat.hpp"
 
@@ -15,7 +27,7 @@ void	test_bureaucrat_constructor()
 			if (i == 4)
 				bureau[i] = new Bureaucrat("", gradeArr[i]);
 			else
-				bureau[i] = new Bureaucrat("bureau" + std::to_string(i + 1), gradeArr[i]);
+				bureau[i] = new Bureaucrat("hello", gradeArr[i]);
 		}
 		catch(const std::exception& e)
 		{
@@ -51,7 +63,7 @@ void	test_grade_functions()
 		bureau[i] = NULL;
 		try
 		{
-			bureau[i] = new Bureaucrat("bureau" + std::to_string(i + 1), gradeArr[i]);
+			bureau[i] = new Bureaucrat("hello", gradeArr[i]);
 		}
 		catch(const std::exception& e)
 		{
@@ -60,7 +72,7 @@ void	test_grade_functions()
 		}
 	}
 
-	std::cout << MAGENTA << "[2] Checking incrementGrade()" << RESET << std::endl;
+	std::cout << MAGENTA << std::endl << "[2] Checking incrementGrade()" << RESET << std::endl;
 	for (int i = 0; i < 3; ++i)
 	{
 		std::cout << "before: " << *bureau[i] << std::endl;

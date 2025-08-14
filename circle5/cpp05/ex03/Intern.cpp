@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Intern.cpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/14 15:39:46 by aputri-a          #+#    #+#             */
+/*   Updated: 2025/08/14 15:39:47 by aputri-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Intern.hpp"
 
 Intern::Intern()
@@ -74,7 +86,7 @@ AForm*	Intern::makeForm(std::string name, std::string target)
 	throw InvalidFormType();
 }
 
-const char* Intern::InvalidFormType::what() const _NOEXCEPT
+const char* Intern::InvalidFormType::what() const throw()
 {
 	return ("Invalid form type!");
 }

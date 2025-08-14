@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Bureaucrat.cpp                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/14 15:36:57 by aputri-a          #+#    #+#             */
+/*   Updated: 2025/08/14 15:36:57 by aputri-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Bureaucrat.hpp"
 
 Bureaucrat::Bureaucrat()
@@ -70,16 +82,16 @@ void	Bureaucrat::signForm(Form& form)
 	}
 	catch(const std::exception& e)
 	{
-		std::cout << name << " couldn't signed " << form.getName() << " because " << std::string(e.what()) << std::endl;
+		std::cout << name << " couldn't sign " << form.getName() << " because " << std::string(e.what()) << std::endl;
 	}
 }
 
-const char* Bureaucrat::GradeTooHighException::what() const _NOEXCEPT
+const char* Bureaucrat::GradeTooHighException::what() const throw()
 {
 	return ("Grade too high!");
 }
 
-const char* Bureaucrat::GradeTooLowException::what() const _NOEXCEPT
+const char* Bureaucrat::GradeTooLowException::what() const throw()
 {
 	return ("Grade too low!");
 }

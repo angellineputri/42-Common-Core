@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ShrubberyCreationForm.cpp                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/14 15:40:03 by aputri-a          #+#    #+#             */
+/*   Updated: 2025/08/14 15:40:04 by aputri-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ShrubberyCreationForm.hpp"
 
 ShrubberyCreationForm::ShrubberyCreationForm()
@@ -44,7 +56,7 @@ void	ShrubberyCreationForm::executeAction(Bureaucrat const & executor) const
 	std::string		outfilename = target + "_shrubbery";
 
 	std::cout << "Bureaucrat " << executor.getName() << " will now try to draw an ASCII tree!" << std::endl;
-	outfile.open(outfilename);
+	outfile.open(outfilename.c_str());
 	if (!outfile.is_open())
 		throw std::runtime_error("Could not open file \"" + outfilename + "\"");
 

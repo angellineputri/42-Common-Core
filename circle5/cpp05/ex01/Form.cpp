@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Form.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/14 15:37:02 by aputri-a          #+#    #+#             */
+/*   Updated: 2025/08/14 15:37:02 by aputri-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Form.hpp"
 
 Form::Form()
@@ -7,7 +19,7 @@ Form::Form()
 }
 
 Form::Form(std::string _name, int _gradeToSign, int _gradeToExecute)
-: name(resolveName(_name)), gradeToSign(_gradeToSign), gradeToExecute(_gradeToExecute)
+: name(resolveName(_name)), gradeToSign(_gradeToSign), gradeToExecute(_gradeToExecute), isSigned(false)
 {
 	std::cout << GREEN << "Form \'" << name << "\' (gradeToSign: \'" << gradeToSign << "\' & gradeToExecute: \'" << gradeToExecute << "\') constructor called" << RESET << std::endl;
 	if (gradeToSign < 1)
@@ -73,17 +85,17 @@ void	Form::beSigned(Bureaucrat& bureaucrat)
 		throw GradeTooLowException();
 }
 
-const char* Form::GradeTooHighException::what() const _NOEXCEPT
+const char* Form::GradeTooHighException::what() const throw()
 {
 	return ("Grade too high!");
 }
 
-const char* Form::GradeTooLowException::what() const _NOEXCEPT
+const char* Form::GradeTooLowException::what() const throw()
 {
 	return ("Grade too low!");
 }
 
-const char* Form::FormIsAlreadySignedException::what() const _NOEXCEPT
+const char* Form::FormIsAlreadySignedException::what() const throw()
 {
 	return ("The form is already signed!");
 }
@@ -96,7 +108,6 @@ std::ostream&	operator<<(std::ostream& out, const Form& form)
 	else
 		out << "(is signed), ";
 	out << "grade to sign: " << form.getGradeToSign() << ", grade to execute: " << form.getGradeToExecute();
-
 	return (out);
 }
 

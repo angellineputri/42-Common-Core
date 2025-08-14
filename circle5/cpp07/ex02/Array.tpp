@@ -6,7 +6,7 @@ Array<T>::Array()
 : capacity(0)
 {
 	std::cout << GREEN << "Array size '0' default constructor called" << RESET << std::endl;
-    arr = new T[capacity];
+    arr = new T[capacity]();
 }
 
 template <typename T>
@@ -14,7 +14,7 @@ Array<T>::Array(unsigned int n)
 : capacity(n)
 {
 	std::cout << GREEN << "Array size \'" << capacity << "\' default constructor called" << RESET << std::endl;
-    arr = new T[capacity];
+    arr = new T[capacity]();
 }
 
 template <typename T>
@@ -30,9 +30,9 @@ Array<T>::Array(const Array& other)
 {
 	std::cout << BLUE << "Array copy constructor called" << RESET << std::endl;
     arr = new T[capacity];
-    for (int i = 0; i < capacity; ++i)
+    for (unsigned int i = 0; i < capacity; ++i)
     {
-        arr[i] = other[i];
+        arr[i] = other.arr[i];
     }
 }
 
@@ -46,7 +46,7 @@ Array<T>&	Array<T>::operator=(const Array &other)
             delete [] arr;
         capacity = other.size();
         arr = new T[capacity];
-        for (int i = 0; i < capacity; ++i)
+        for (unsigned int i = 0; i < capacity; ++i)
         {
             arr[i] = other[i];
         }
@@ -55,7 +55,7 @@ Array<T>&	Array<T>::operator=(const Array &other)
 }
 
 template <typename T>
-T&  Array<T>::operator[](unsigned int i)
+T&  Array<T>::operator[](unsigned int i) const
 {
     if (!arr || i > capacity - 1)
     {
@@ -71,7 +71,7 @@ unsigned int    Array<T>::size() const
 }
 
 template <typename T>
-const char* Array<T>::InvalidIndexException::what() const _NOEXCEPT
+const char* Array<T>::InvalidIndexException::what() const throw()
 {
 	return ("Error: invalid index");
 }

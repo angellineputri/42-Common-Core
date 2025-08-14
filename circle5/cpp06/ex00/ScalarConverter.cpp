@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ScalarConverter.cpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/14 16:44:07 by aputri-a          #+#    #+#             */
+/*   Updated: 2025/08/14 16:44:08 by aputri-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ScalarConverter.hpp"
 
 ScalarConverter::ScalarConverter()
@@ -145,7 +157,7 @@ void    ScalarConverter::convertFromCharLiteral(const std::string& input)
 void    ScalarConverter::convertFromIntLiteral(const std::string& input)
 {
     std::string	type[4] = {"char: ", "int: ", "float: ", "double: "};
-    int base = std::stoi(input);
+    int base = std::atoi(input.c_str());
     char c = static_cast<char>(base);
     for (int i = 0; i < 4; ++i)
     {
@@ -180,7 +192,7 @@ void    ScalarConverter::convertFromIntLiteral(const std::string& input)
 void    ScalarConverter::convertFromFloatLiteral(const std::string& input)
 {
     std::string	type[4] = {"char: ", "int: ", "float: ", "double: "};
-    float base = std::stof(input);
+    float base = std::atof(input.c_str());
     char c = static_cast<char>(base);
     int integer = static_cast<int>(base);
     for (int i = 0; i < 4; ++i)
@@ -218,7 +230,7 @@ void    ScalarConverter::convertFromFloatLiteral(const std::string& input)
 void    ScalarConverter::convertFromDoubleLiteral(const std::string& input)
 {
     std::string	type[4] = {"char: ", "int: ", "float: ", "double: "};
-    double base = std::stod(input);
+    double base = std::strtod(input.c_str(), NULL);
     char c = static_cast<char>(base);
     int integer = static_cast<int>(base);
     for (int i = 0; i < 4; ++i)
@@ -267,8 +279,8 @@ int ScalarConverter::getPrecision(const std::string& input)
         else if (pt == 0 && input[i] != 'f')
             precision++;
     }
-    if (precision > 7)
-        return (7);
+    if (precision > 4)
+        return (4);
     return (precision);
 }
 
@@ -305,12 +317,12 @@ void	ScalarConverter::convert(const std::string& input)
     }
 }
 
-const char* ScalarConverter::ImpossibleConvertion::what() const _NOEXCEPT
+const char* ScalarConverter::ImpossibleConvertion::what() const throw()
 {
 	return ("impossible");
 }
 
-const char* ScalarConverter::NonDisplayableCharLiteral::what() const _NOEXCEPT
+const char* ScalarConverter::NonDisplayableCharLiteral::what() const throw()
 {
 	return ("non displayable");
 }

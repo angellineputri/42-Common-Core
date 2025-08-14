@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/14 15:37:07 by aputri-a          #+#    #+#             */
+/*   Updated: 2025/08/14 15:37:07 by aputri-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <sstream>
 #include "Bureaucrat.hpp"
 #include "Form.hpp"
@@ -17,7 +29,7 @@ void	test_form()
 			if (i == 1)
 				form[i] = new Form("", gradeSignArr[i], gradeExecuteArr[i]);
 			else
-				form[i] = new Form("form" + std::to_string(i + 1), gradeSignArr[i], gradeExecuteArr[i]);
+				form[i] = new Form("formname", gradeSignArr[i], gradeExecuteArr[i]);
 		}
 		catch(const std::exception& e)
 		{
@@ -27,9 +39,9 @@ void	test_form()
 	}
 
 	std::cout << MAGENTA << std::endl << "printing form with the << operator" << RESET << std::endl;
-	for (int i = 0; i < 5; ++i)
+	for (int i = 0; i < 2; ++i)
 	{
-		if (form[i])
+		if (form[i] != NULL)
 			std::cout << *form[i] << std::endl;
 	}
 

@@ -3,7 +3,7 @@
 template <typename type>
 void    print_arr(const Array<type> &arr)
 {
-    for (int i = 0; i < arr.size(); ++i)
+    for (unsigned int i = 0; i < arr.size(); ++i)
     {
         if (i != arr.size() - 1)
             std::cout << arr[i] << ", ";
@@ -20,6 +20,7 @@ void    test_constructors()
 
     std::cout << MAGENTA << "/// string array ///" << std::endl;
     Array<std::string>  str_arr_heap;
+    std::cout << std::endl;
 
     std::cout << BLUE << "[2] Test constructor with parameter" << RESET << std::endl;
     std::cout << MAGENTA << "/// integer array ///" << std::endl;
@@ -31,6 +32,7 @@ void    test_constructors()
     Array<std::string>  *str_arr_stack = new Array<std::string>(5);
     (*str_arr_stack)[0] = "original";
     (*str_arr_stack)[1] = "original";
+    std::cout << std::endl;
 
     std::cout << BLUE << "[3] Test copy constructor" << RESET << std::endl;
     std::cout << MAGENTA << "/// integer array before changes ///" << std::endl;
@@ -38,7 +40,7 @@ void    test_constructors()
     std::cout << YELLOW << "original: " << RESET << std::endl;
     std::cout << YELLOW << "address = " << &int_arr_stack << std::endl;
     std::cout << YELLOW << "array = " << RESET;
-    print_arr(int_arr_stack);
+    print_arr(*int_arr_stack);
     std::cout << std::endl;
 
     std::cout << YELLOW << "copy constructor: " << RESET << std::endl;
@@ -49,12 +51,12 @@ void    test_constructors()
 
     std::cout << MAGENTA << "/// integer array after changes ///" << std::endl;
     (*int_arr_stack)[1] = 50;
-    (*int_arr_copy)[1] = 100;
+    (int_arr_copy)[1] = 100;
 
     std::cout << YELLOW << "original: " << RESET << std::endl;
     std::cout << YELLOW << "address = " << &int_arr_stack << std::endl;
     std::cout << YELLOW << "array = " << RESET;
-    print_arr(int_arr_stack);
+    print_arr(*int_arr_stack);
     std::cout << std::endl;
 
     std::cout << YELLOW << "copy constructor: " << RESET << std::endl;
@@ -64,11 +66,11 @@ void    test_constructors()
     std::cout << std::endl;
 
     std::cout << MAGENTA << "/// string array before changes ///" << std::endl;
-    Array<std::string>  str_arr_copy(str_arr_stack);
+    Array<std::string>  str_arr_copy(*str_arr_stack);
     std::cout << YELLOW << "original: " << RESET << std::endl;
     std::cout << YELLOW << "address = " << &str_arr_stack << std::endl;
     std::cout << YELLOW << "array = " << RESET;
-    print_arr(str_arr_stack);
+    print_arr(*str_arr_stack);
     std::cout << std::endl;
 
     std::cout << YELLOW << "copy constructor: " << RESET << std::endl;
@@ -78,13 +80,13 @@ void    test_constructors()
     std::cout << std::endl;
 
     std::cout << MAGENTA << "/// string array after changes ///" << std::endl;
-    (*str_arr_copy)[1] = "copy constructor";
+    (str_arr_copy)[1] = "copy constructor";
     (*str_arr_stack)[1] = "new original";
 
     std::cout << YELLOW << "original: " << RESET << std::endl;
     std::cout << YELLOW << "address = " << &str_arr_stack << std::endl;
     std::cout << YELLOW << "array = " << RESET;
-    print_arr(str_arr_stack);
+    print_arr(*str_arr_stack);
     std::cout << std::endl;
 
     std::cout << YELLOW << "copy constructor: " << RESET << std::endl;
@@ -98,14 +100,14 @@ void    test_constructors()
     (*str_arr_stack)[1] = "original";
 
     std::cout << BLUE << "[4] Test copy assignment" << RESET << std::endl;
-    int_arr_copy = int_arr_stack;
-    str_arr_copy = str_arr_stack;
+    int_arr_copy = *int_arr_stack;
+    str_arr_copy = *str_arr_stack;
 
     std::cout << MAGENTA << "/// integer array before changes ///" << std::endl;
     std::cout << YELLOW << "original: " << RESET << std::endl;
     std::cout << YELLOW << "address = " << &int_arr_stack << std::endl;
     std::cout << YELLOW << "array = " << RESET;
-    print_arr(int_arr_stack);
+    print_arr(*int_arr_stack);
     std::cout << std::endl;
 
     std::cout << YELLOW << "copy assignment: " << RESET << std::endl;
@@ -116,26 +118,25 @@ void    test_constructors()
 
     std::cout << MAGENTA << "/// integer array after changes ///" << std::endl;
     (*int_arr_stack)[1] = 50;
-    (*int_arr_copy)[1] = 100;
+    (int_arr_copy)[1] = 100;
 
     std::cout << YELLOW << "original: " << RESET << std::endl;
     std::cout << YELLOW << "address = " << &int_arr_stack << std::endl;
     std::cout << YELLOW << "array = " << RESET;
-    print_arr(int_arr_stack);
+    print_arr(*int_arr_stack);
     std::cout << std::endl;
 
-    std::cout << YELLOW << "copy constructor: " << RESET << std::endl;
+    std::cout << YELLOW << "copy assignment: " << RESET << std::endl;
     std::cout << YELLOW << "address = " << &int_arr_copy << std::endl;
     std::cout << YELLOW << "array = " << RESET;
     print_arr(int_arr_copy);
     std::cout << std::endl;
 
     std::cout << MAGENTA << "/// string array before changes ///" << std::endl;
-    Array<std::string>  str_arr_copy(str_arr_stack);
     std::cout << YELLOW << "original: " << RESET << std::endl;
     std::cout << YELLOW << "address = " << &str_arr_stack << std::endl;
     std::cout << YELLOW << "array = " << RESET;
-    print_arr(str_arr_stack);
+    print_arr(*str_arr_stack);
     std::cout << std::endl;
 
     std::cout << YELLOW << "copy constructor: " << RESET << std::endl;
@@ -146,12 +147,12 @@ void    test_constructors()
 
     std::cout << MAGENTA << "/// string array after changes ///" << std::endl;
     (*str_arr_stack)[1] = "copy constructor";
-    (*str_arr_copy)[1] = "new original";
+    (str_arr_copy)[1] = "new original";
 
     std::cout << YELLOW << "original: " << RESET << std::endl;
     std::cout << YELLOW << "address = " << &str_arr_stack << std::endl;
     std::cout << YELLOW << "array = " << RESET;
-    print_arr(str_arr_stack);
+    print_arr(*str_arr_stack);
     std::cout << std::endl;
 
     std::cout << YELLOW << "copy constructor: " << RESET << std::endl;
@@ -167,7 +168,31 @@ void    test_constructors()
 
 void    test_operators_and_function()
 {
+    std::cout << BLUE << std::endl << "[6] Test the size() function" << RESET << std::endl;
+    Array<std::string>  arr_one(0);
+    Array<std::string>  arr_two(5);
 
+    std::cout << YELLOW << "size of array 1: " << arr_one.size() << RESET << std::endl;
+    std::cout << YELLOW << "size of array 2: " << arr_two.size() << RESET << std::endl;
+
+    std::cout << BLUE << std::endl << "[7] Test the [] operator" << RESET << std::endl;
+    try
+    {
+        arr_one[1] = "one";
+    }
+    catch(const std::exception& e)
+    {
+        std::cout << e.what() << std::endl;
+    }
+    try
+    {
+        for (unsigned int i = 0; i < arr_two.size(); ++i)
+            arr_two[i] = "two";
+    }
+    catch(const std::exception& e)
+    {
+        std::cout << e.what() << std::endl;
+    }
 }
 
 int main()

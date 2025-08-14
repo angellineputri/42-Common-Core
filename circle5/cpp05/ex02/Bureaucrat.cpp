@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Bureaucrat.cpp                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/14 15:37:28 by aputri-a          #+#    #+#             */
+/*   Updated: 2025/08/14 15:37:29 by aputri-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Bureaucrat.hpp"
 
 Bureaucrat::Bureaucrat()
@@ -86,12 +98,12 @@ void	Bureaucrat::executeForm(AForm const & form) const
 	}	
 }
 
-const char* Bureaucrat::GradeTooHighException::what() const _NOEXCEPT
+const char* Bureaucrat::GradeTooHighException::what() const throw()
 {
 	return ("Grade too high!");
 }
 
-const char* Bureaucrat::GradeTooLowException::what() const _NOEXCEPT
+const char* Bureaucrat::GradeTooLowException::what() const throw()
 {
 	return ("Grade too low!");
 }

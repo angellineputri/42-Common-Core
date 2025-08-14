@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   AForm.cpp                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/14 15:37:23 by aputri-a          #+#    #+#             */
+/*   Updated: 2025/08/14 15:37:23 by aputri-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "AForm.hpp"
 
 AForm::AForm()
@@ -7,7 +19,7 @@ AForm::AForm()
 }
 
 AForm::AForm(std::string _name, int _gradeToSign, int _gradeToExecute)
-: name(resolveName(_name)), gradeToSign(_gradeToSign), gradeToExecute(_gradeToExecute)
+: name(resolveName(_name)), gradeToSign(_gradeToSign), gradeToExecute(_gradeToExecute), isSigned(false)
 {
 	std::cout << GREEN << "AForm \'" << name << "\' (gradeToSign: \'" << gradeToSign << "\' & gradeToExecute: \'" << gradeToExecute << "\') constructor called" << RESET << std::endl;
 	if (gradeToSign < 1)
@@ -89,22 +101,22 @@ void	AForm::execute(Bureaucrat const & executor) const
 	}
 }
 
-const char* AForm::GradeTooHighException::what() const _NOEXCEPT
+const char* AForm::GradeTooHighException::what() const throw()
 {
 	return ("Grade too high!");
 }
 
-const char* AForm::GradeTooLowException::what() const _NOEXCEPT
+const char* AForm::GradeTooLowException::what() const throw()
 {
 	return ("Grade too low!");
 }
 
-const char* AForm::FormNotSignedException::what() const _NOEXCEPT
+const char* AForm::FormNotSignedException::what() const throw()
 {
 	return ("Form has not been signed!");
 }
 
-const char* AForm::FormIsAlreadySignedException::what() const _NOEXCEPT
+const char* AForm::FormIsAlreadySignedException::what() const throw()
 {
 	return ("The form is already signed!");
 }

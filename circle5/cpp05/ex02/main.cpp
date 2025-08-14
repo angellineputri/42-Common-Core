@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/14 15:37:35 by aputri-a          #+#    #+#             */
+/*   Updated: 2025/08/14 15:37:36 by aputri-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <sstream>
 #include "Bureaucrat.hpp"
 #include "ShrubberyCreationForm.hpp"
@@ -79,6 +91,9 @@ void test_form_sign_and_execute(AForm **form)
 		}
 		std::cout << std::endl;
 	}
+
+	delete worstBureau;
+	delete bestBureau;
 }
 
 void clean_up(AForm** form, int size)
@@ -91,6 +106,7 @@ void clean_up(AForm** form, int size)
             form[i] = NULL;
         }
     }
+	delete [] form;
 }
 
 int	main()

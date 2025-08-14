@@ -1,9 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ScalarConverter.hpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/14 16:44:15 by aputri-a          #+#    #+#             */
+/*   Updated: 2025/08/14 16:44:15 by aputri-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SCALARCONVERTER_HPP
 #define SCALARCONVERTER_HPP
 
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <cstdlib>
+#include <exception>
 
 #define RESET	"\033[0m"
 #define RED		"\033[31m"
@@ -42,13 +56,13 @@ class	ScalarConverter
 		class ImpossibleConvertion : public std::exception
 		{
 			public:
-				const char* what() const _NOEXCEPT;
+				const char* what() const throw();
 		};
 
 		class NonDisplayableCharLiteral : public std::exception
 		{
 			public:
-				const char* what() const _NOEXCEPT;
+				const char* what() const throw();
 		};
 };
 

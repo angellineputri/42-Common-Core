@@ -16,8 +16,7 @@ void    iter(type *arr, int len, func_type f)
         }
         catch(const std::exception& e)
         {
-            std::string msg = "Error: failed to apply function on index " + std::to_string(i);
-            throw std::runtime_error(msg);
+            throw std::runtime_error("Error: failed to apply function");
         }
     }
 }

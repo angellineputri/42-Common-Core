@@ -55,7 +55,10 @@
         "algorithm": "cpp",
         "__config": "cpp",
         "iterator": "cpp",
-        "*.tpp": "cpp"
+        "*.tpp": "cpp",
+        "exception": "cpp",
+        "forward_list": "cpp",
+        "list": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

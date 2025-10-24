@@ -39,6 +39,7 @@ void    identify(Base& p)
         Base &new_p = dynamic_cast<A&>(p);
         (void)new_p;
         std::cout << "A";
+        return ;
     }
     catch(const std::exception& e){}
 
@@ -47,6 +48,7 @@ void    identify(Base& p)
         Base &new_p = dynamic_cast<B&>(p);
         (void)new_p;
         std::cout << "B";
+        return ;
     }
     catch(const std::exception& e){}
 
@@ -55,6 +57,7 @@ void    identify(Base& p)
         Base &new_p = dynamic_cast<C&>(p);
         (void)new_p;
         std::cout << "C";
+        return ;
     }
     catch(const std::exception& e){}
 

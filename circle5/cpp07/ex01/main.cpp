@@ -117,7 +117,7 @@ void    test_iter_on_int_arr()
 
 void    test_iter_on_str_arr()
 {
-std::string str_arr[3] = {"one", "two", "three"};
+    std::string str_arr[3] = {"one", "two", "three"};
     std::string *invalid_str_arr = NULL;
     std::cout << BLUE << "[2] Test iter function on str array" << RESET << std::endl;
     std::cout << MAGENTA << "/// testing function with valid non-const array, valid length, and valid function ('delete_vocal') ///" << RESET << std::endl;

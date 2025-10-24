@@ -57,7 +57,7 @@ Array<T>&	Array<T>::operator=(const Array &other)
 template <typename T>
 T&  Array<T>::operator[](unsigned int i) const
 {
-    if (!arr || i > capacity - 1)
+    if (!arr || i > capacity - 1 || capacity == 0)
     {
         throw InvalidIndexException();
     }

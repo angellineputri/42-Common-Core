@@ -25,7 +25,7 @@ Serializer::~Serializer()
 Serializer::Serializer(const Serializer& other)
 {
 	std::cout << BLUE << "Serializer copy constructor called" << RESET << std::endl;
-    (void)other;
+    *this = other;
 }
 
 Serializer&	Serializer::operator=(const Serializer& other)

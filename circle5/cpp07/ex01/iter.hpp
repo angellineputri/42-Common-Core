@@ -10,14 +10,7 @@ void    iter(type *arr, int len, func_type f)
 
     for (int i = 0; i < len; ++i)
     {
-        try
-        {
-            f(arr[i]);
-        }
-        catch(const std::exception& e)
-        {
-            throw std::runtime_error("Error: failed to apply function");
-        }
+        f(arr[i]);
     }
 }
 

@@ -39,14 +39,12 @@ void    test_constructors()
     Array<int>  int_arr_copy(*int_arr_stack);
     std::cout << YELLOW << "original: " << RESET << std::endl;
     std::cout << YELLOW << "address = " << &int_arr_stack << std::endl;
-    std::cout << YELLOW << "array = " << RESET;
-    print_arr(*int_arr_stack);
+    std::cout << YELLOW << "array = " << RESET; print_arr(*int_arr_stack);
     std::cout << std::endl;
 
     std::cout << YELLOW << "copy constructor: " << RESET << std::endl;
     std::cout << YELLOW << "address = " << &int_arr_copy << std::endl;
-    std::cout << YELLOW << "array = " << RESET;
-    print_arr(int_arr_copy);
+    std::cout << YELLOW << "array = " << RESET; print_arr(int_arr_copy);
     std::cout << std::endl;
 
     std::cout << MAGENTA << "/// integer array after changes ///" << std::endl;
@@ -55,14 +53,12 @@ void    test_constructors()
 
     std::cout << YELLOW << "original: " << RESET << std::endl;
     std::cout << YELLOW << "address = " << &int_arr_stack << std::endl;
-    std::cout << YELLOW << "array = " << RESET;
-    print_arr(*int_arr_stack);
+    std::cout << YELLOW << "array = " << RESET; print_arr(*int_arr_stack);
     std::cout << std::endl;
 
     std::cout << YELLOW << "copy constructor: " << RESET << std::endl;
     std::cout << YELLOW << "address = " << &int_arr_copy << std::endl;
-    std::cout << YELLOW << "array = " << RESET;
-    print_arr(int_arr_copy);
+    std::cout << YELLOW << "array = " << RESET; print_arr(int_arr_copy);
     std::cout << std::endl;
 
     std::cout << MAGENTA << "/// string array before changes ///" << std::endl;
@@ -179,15 +175,37 @@ void    test_operators_and_function()
     try
     {
         arr_one[1] = "one";
+        std::cout << YELLOW << "arr_one[1]: " << RESET << arr_one[1] << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cout << YELLOW << "arr_one[1]: " << RESET << e.what() << std::endl;
+    }
+    try
+    {
+        for (unsigned int i = 0; i < arr_two.size(); ++i)
+        {
+            arr_two[i] = "two";
+            std::cout << YELLOW << "arr_two[" << i << "]: " << RESET << arr_two[i] << std::endl;
+        }
     }
     catch(const std::exception& e)
     {
         std::cout << e.what() << std::endl;
     }
+
     try
     {
-        for (unsigned int i = 0; i < arr_two.size(); ++i)
-            arr_two[i] = "two";
+        std::cout << YELLOW << "arr_two[-1]: " << RESET << arr_two[-1] << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cout << e.what() << std::endl;
+    }
+
+    try
+    {
+        std::cout << YELLOW << "arr_two[5]: " << RESET << arr_two[5] << std::endl;
     }
     catch(const std::exception& e)
     {

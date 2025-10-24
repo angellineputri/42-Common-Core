@@ -25,7 +25,7 @@ ScalarConverter::~ScalarConverter()
 ScalarConverter::ScalarConverter(const ScalarConverter& other)
 {
 	std::cout << BLUE << "ScalarConverter copy constructor called" << RESET << std::endl;
-    (void)other;
+    *this = other;
 }
 
 ScalarConverter&	ScalarConverter::operator=(const ScalarConverter& other)
@@ -73,7 +73,7 @@ bool    ScalarConverter::isFloatLiteral(const std::string& input)
         sign = 1;
     for (size_t i = 0 + sign; i < input.size(); ++i)
     {
-        if (input[i] == '.' && i != 0 + sign && i != input.size() - 1 && pt)
+        if (input[i] == '.' && i != 0 + sign && i != input.size() - 1 && input[i + 1] != 'f' && pt)
             pt = 0;
         else if (input[i] == 'f' && i != input.size() - 1)
             return (false);

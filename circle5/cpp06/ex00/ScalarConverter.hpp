@@ -29,14 +29,12 @@
 class	ScalarConverter
 {
 	public:
+		static void	convert(const std::string& input);
+	
+	private:
 		ScalarConverter();
 		~ScalarConverter();
-
 		ScalarConverter(const ScalarConverter& other);
-		
-		static void	convert(const std::string& input);
-		
-	private:
 		ScalarConverter&	operator=(const ScalarConverter &other);
 		
 		static bool	isCharLiteral(const std::string& input);

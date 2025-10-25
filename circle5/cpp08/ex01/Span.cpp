@@ -3,13 +3,13 @@
 Span::Span()
 : max_capacity(0)
 {
-    std::cout << GREEN << "Span default constructor of size \'" << max_capacity << "\' is called" << RESET << std::endl;
+    std::cout << GREEN << "Span default constructor of size \'" << RESET << max_capacity << GREEN << "\' is called" << RESET << std::endl;
 }
 
 Span::Span(unsigned int n)
 : max_capacity(n)
 {
-    std::cout << GREEN << "Span constructor of size \'" << max_capacity << "\' is called" << RESET << std::endl;
+    std::cout << GREEN << "Span constructor of size \'" << RESET << max_capacity << GREEN << "\' is called" << RESET << std::endl;
 }
 
 Span::~Span()
@@ -48,15 +48,6 @@ void    Span::addNumber(int newN)
     }
 }
 
-void    Span::addRange(std::vector<int>::iterator begin, std::vector<int>::iterator end)
-{
-    for (std::vector<int>::iterator it = begin; it != end; ++it) {
-        if (v.size() >= max_capacity)
-            throw FullCapacityException();
-        v.push_back(*it);
-    }
-}
-
 int     Span::shortestSpan()
 {
     if (v.size() <= 1)
@@ -77,9 +68,14 @@ int     Span::longestSpan()
     if (v.size() <= 1)
         throw InsufficientDataException();
 
-    int max = *max_element(v.begin(), v.end());
-    int min = *min_element(v.begin(), v.end());
+    int max = *std::max_element(v.begin(), v.end());
+    int min = *std::min_element(v.begin(), v.end());
     return (max - min);
+}
+
+const char* Span::InsufficientDataException::what() const throw()
+{
+	return ("Error: unable to get span since data is insufficient!");
 }
 
 const char* Span::FullCapacityException::what() const throw()
@@ -87,9 +83,9 @@ const char* Span::FullCapacityException::what() const throw()
 	return ("Error: unable to add any more data, capacity is already full!");
 }
 
-const char* Span::InsufficientDataException::what() const throw()
+const char* Span::FullCapacityRangeException::what() const throw()
 {
-	return ("Error: unable to get span since data is insufficient!");
+	return ("Error: unable to add data, capacity is not enough!");
 }
 
 void    Span::print(int full)

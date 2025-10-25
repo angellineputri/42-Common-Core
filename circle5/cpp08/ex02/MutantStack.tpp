@@ -18,7 +18,6 @@ MutantStack<T>::MutantStack(const MutantStack<T>& other)
 : std::stack<T, std::deque<T> >(other)
 {
     std::cout << BLUE << "MutantStack copy constructor called" << RESET << std::endl;
-    *this = other;
 }
 
 template <typename T>

@@ -26,9 +26,23 @@ class	Span
         void    addNumber(int newN);
         int     shortestSpan();
         int     longestSpan();
-		void	addRange(std::vector<int>::iterator begin, std::vector<int>::iterator end);
 
 		void	print(int full);
+		
+		template <typename ContainerIterator>
+		void    addRange(ContainerIterator begin, ContainerIterator end)
+		{
+			size_t rangeSize = std::distance(begin, end);
+			if (v.size() + rangeSize > max_capacity)
+				throw FullCapacityRangeException();
+			v.insert(v.end(), begin, end);
+		}
+
+		class InsufficientDataException : public std::exception
+		{
+			public:
+				const char* what() const throw();
+		};  
 
 		class FullCapacityException : public std::exception
 		{
@@ -36,18 +50,16 @@ class	Span
 				const char* what() const throw();
 		};
 
-   		class InsufficientDataException : public std::exception
+		class FullCapacityRangeException : public std::exception
 		{
 			public:
 				const char* what() const throw();
-		};     
+		};   
 
 	private:
         unsigned int        max_capacity;
         std::vector<int>    v;
 
 };
-
-std::ostream&	operator<<(std::ostream& out, const Span& span);
 
 #endif

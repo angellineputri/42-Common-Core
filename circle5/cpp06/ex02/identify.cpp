@@ -6,7 +6,7 @@
 /*   By: aputri-a <aputri-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 16:44:42 by aputri-a          #+#    #+#             */
-/*   Updated: 2025/08/14 16:44:42 by aputri-a         ###   ########.fr       */
+/*   Updated: 2025/10/26 15:00:33 by aputri-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void    identify(Base& p)
     {
         Base &new_p = dynamic_cast<A&>(p);
         (void)new_p;
-        std::cout << "A";
+        std::cout << "A" << RESET << "\'" << std::endl;
         return ;
     }
     catch(const std::exception& e){}
@@ -47,7 +47,7 @@ void    identify(Base& p)
     {
         Base &new_p = dynamic_cast<B&>(p);
         (void)new_p;
-        std::cout << "B";
+        std::cout << "B" << RESET << "\'" << std::endl;
         return ;
     }
     catch(const std::exception& e){}
@@ -56,10 +56,8 @@ void    identify(Base& p)
     {
         Base &new_p = dynamic_cast<C&>(p);
         (void)new_p;
-        std::cout << "C";
+        std::cout << "C" << RESET << "\'" << std::endl;
         return ;
     }
     catch(const std::exception& e){}
-
-    std::cout << RESET << "\'" << std::endl;
 }

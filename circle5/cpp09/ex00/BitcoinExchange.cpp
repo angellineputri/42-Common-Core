@@ -270,7 +270,7 @@ void	BitcoinExchange::logError(std::string filename, std::string type, std::stri
 
 	std::cerr << RED << "Error ["
 		<< MAGENTA << filename
-		<< RED << "] : " << problem << " " << type << " \'"
+		<< RED << "]: " << problem << " " << type << " \'"
 		<< MAGENTA << typeValue
 		<< RED << "\' on line \'"
 		<< MAGENTA << lineNumber 

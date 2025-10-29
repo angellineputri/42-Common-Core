@@ -72,7 +72,6 @@ class	BitcoinExchange
 				const char* what() const throw();
 		};
 
-
 };
 
 #endif

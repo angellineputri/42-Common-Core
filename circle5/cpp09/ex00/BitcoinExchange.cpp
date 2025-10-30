@@ -1,17 +1,20 @@
 #include "BitcoinExchange.hpp"
 
-BitcoinExchange::BitcoinExchange(std::string filename)
+BitcoinExchange::BitcoinExchange()
 {
 	// std::cout << GREEN << "BitcoinExchange default constructor called" << RESET << std::endl;
 	fileMeta	dbFileMeta = createMetaData("data.csv", "date", "exchange_rate", false);
-	fileMeta	inputFileMeta = createMetaData(filename, "date", "value", true);
 	try { 
 		database = tokenizer(dbFileMeta);
 	} catch(const std::exception& e){
 		std::string msg = std::string(e.what()) + " data.csv";
     	throw std::runtime_error(msg);
 	}
-	
+}
+
+void	BitcoinExchange::calculate(std::string	filename)
+{
+	fileMeta	inputFileMeta = createMetaData(filename, "date", "value", true);
 	try { 
 		processInputFile(inputFileMeta);
 	} catch(const std::exception& e){

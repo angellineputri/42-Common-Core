@@ -1,0 +1,88 @@
+#include "PmergeMe.hpp"
+
+PmergeMe::PmergeMe()
+{
+	// std::cout << GREEN << "PmergeMe default constructor called" << RESET << std::endl;
+}
+
+PmergeMe::~PmergeMe()
+{
+	// std::cout << RED << "PmergeMe destructor called" << RESET << std::endl;
+}
+
+PmergeMe::PmergeMe(const PmergeMe& other)
+{
+	// std::cout << BLUE << "PmergeMe copy constructor called" << RESET << std::endl;
+	*this = other;
+}
+
+PmergeMe&	PmergeMe::operator=(const PmergeMe &other)
+{
+	// std::cout << BLUE << "PmergeMe copy assignment operator called" << RESET << std::endl;
+	if (this != &other)
+		return (*this);
+	return (*this);
+}
+
+Result	PmergeMe::mergeInsertSort(char **argv)
+{
+	Result res;
+	try {
+		res = load_data(argv);
+	} catch(const std::exception& e) {
+		throw ;
+	}
+
+	res.vTime = sort(res.v);
+	// res.dqTime = sort(res.dq);
+
+	return res;
+}
+
+Result	PmergeMe::load_data(char **argv)
+{
+	int 	converted;
+	Result	res;
+	res.dqTime = 0;
+	res.vTime = 0;
+	std::vector<int> *before = &res.before;
+	std::vector<int> *v = &res.v;
+	std::deque<int> *dq = &res.dq;
+
+	for (size_t i = 0; argv[i]; ++i) {
+		std::string argStr = argv[i];
+		if (argStr.empty()) 
+			continue ;
+		for (size_t j = 0; j < argStr.size(); ++j) {
+			if (argStr[j] == '+' && j == 0)
+				continue ;
+			if (!isdigit(argStr[j])) 
+				throw invalidArgumentException();
+		}
+		try {
+			converted = safer_stoi(argStr);
+		} catch(const std::exception& e) {
+			throw ;
+		}
+		before->push_back(converted);
+		v->push_back(converted);
+		dq->push_back(converted);
+	}
+	return res;
+}
+
+int	PmergeMe::safer_stoi(const std::string &str) {
+    char *endptr;
+    long val = std::strtol(str.c_str(), &endptr, 10);
+
+    if (*endptr != '\0' || errno == ERANGE || val > INT_MAX || val < 0)
+        throw invalidArgumentException();
+
+    return static_cast<int>(val);
+}
+
+const char* PmergeMe::invalidArgumentException::what() const throw()
+{
+	return ("Error: invalid argument passed, unable to sort.");
+}
+

@@ -1,6 +1,11 @@
 #include "RPN.hpp"
 
-RPN::RPN(std::string expression)
+RPN::RPN()
+{
+	// std::cout << GREEN << "RPN default constructor called" << RESET << std::endl;
+}
+
+int	RPN::calculateRPN(std::string expression)
 {
 	// std::cout << GREEN << "RPN default constructor called" << RESET << std::endl;
 	size_t i = 0;
@@ -12,10 +17,7 @@ RPN::RPN(std::string expression)
 			pos = expression.size();
 		std::string token = expression.substr(i, pos - i);
 		if (pos - i > 1)
-		{
-			std::cerr << RED << "Error: invalid token found \'" << MAGENTA << token << RED << "\'" << RESET << std::endl;
-			return ;
-		}
+    		throw std::runtime_error("Error: invalid token found \'" + token + "\'");
 		if (!token.empty())
 		{
 			if (isNumber(token))
@@ -25,23 +27,19 @@ RPN::RPN(std::string expression)
 				try {
 					st.push(calculate(token));
 				} catch(const std::exception& e) {
-					std::cerr << RED << e.what() << RESET << std::endl;
-					return ;
+					throw ;
 				}
 			}
 			else
-			{
-				std::cerr << RED << "Error: invalid token found \'" << MAGENTA << token << RED << "\'" << RESET << std::endl;
-				return ;
-			}
+    			throw std::runtime_error("Error: invalid token found \'" + token + "\'");
 		}
 		i = pos + 1;
 	}
 
 	if (st.size() == 1)
-		std::cout << BLUE << "result is " << YELLOW << st.top() << std::endl;
+		return (st.top());
 	else
-		std::cerr << RED << "Error: not enough operators to do calculation." << std::endl;
+		throw TooMuchNumbersException();
 }
 
 RPN::~RPN()
@@ -68,8 +66,7 @@ int	RPN::calculate(std::string sign)
 	std::string types[4] = {"+", "-", "*", "/"};
 	int i = 0;
 
-	for (; i < 4; ++i)
-	{
+	for (; i < 4; ++i) {
 		if (sign == types[i])
 			break ;
 	}
@@ -124,3 +121,9 @@ const char* RPN::InvalidStackSizeException::what() const throw()
 {
 	return ("Error: not enough numbers to do operation.");
 }
+
+const char* RPN::TooMuchNumbersException::what() const throw()
+{
+	return ("Error: not enough operators to do calculation.");
+}
+

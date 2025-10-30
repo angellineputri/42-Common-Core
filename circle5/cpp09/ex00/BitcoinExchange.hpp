@@ -40,11 +40,13 @@ struct fileElements
 class	BitcoinExchange
 {
 	public:
-		BitcoinExchange(std::string	filename);
+		BitcoinExchange();
 		~BitcoinExchange();
 
 		BitcoinExchange(const BitcoinExchange& other);
 		BitcoinExchange&		operator=(const BitcoinExchange &other);
+
+		void	calculate(std::string	filename);
 
 	private:
 		std::map<std::string, float>	database;

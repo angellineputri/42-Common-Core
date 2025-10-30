@@ -20,11 +20,13 @@
 class	RPN
 {
 	public:
-		RPN(std::string expression);
+		RPN();
 		~RPN();
 
 		RPN(const RPN& other);
 		RPN&		operator=(const RPN &other);
+
+		int			calculateRPN(std::string expression);
 
 	private:
 		std::stack<int>	st;
@@ -36,6 +38,12 @@ class	RPN
 		std::string	ft_to_string(int n);
 
 		class InvalidStackSizeException : public std::exception
+		{
+			public:
+				const char* what() const throw();
+		};
+
+		class TooMuchNumbersException : public std::exception
 		{
 			public:
 				const char* what() const throw();

@@ -9,6 +9,17 @@ int main(int argc, char **argv)
         return (1);
     }
 
-    RPN rpn(argv[1]);
+    RPN rpn;
+
+    try
+    {
+        int result = rpn.calculateRPN(argv[1]);
+        std::cout << BLUE << "result is " << YELLOW << result << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << RED << e.what() << RESET << std::endl;
+    }
+    
     return (0);
 }

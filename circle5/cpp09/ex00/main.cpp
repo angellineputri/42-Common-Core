@@ -8,10 +8,14 @@ int main(int argc, char **argv)
             << "./btc [file]" << RESET << std::endl;
         return (1);
     }
-    try {
-        BitcoinExchange btcExchange(argv[1]);
+
+    try 
+    {
+        BitcoinExchange btcExchange;
+        btcExchange.calculate(argv[1]);
     }
-    catch(const std::exception& e) {
+    catch(const std::exception& e)
+    {
         std::cerr << RED << e.what() << RESET << std::endl;
     }
     

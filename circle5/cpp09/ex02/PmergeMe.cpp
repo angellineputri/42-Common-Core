@@ -3,6 +3,9 @@
 PmergeMe::PmergeMe()
 {
 	// std::cout << GREEN << "PmergeMe default constructor called" << RESET << std::endl;
+	size_t tmp[19] = {1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731, 5461, 10923, 21845, 43691, 87381, 174763, 349525};
+	for (int i = 0; i < 19; ++i)
+		jsnum[i] = tmp[i];
 }
 
 PmergeMe::~PmergeMe()

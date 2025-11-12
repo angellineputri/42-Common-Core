@@ -37,7 +37,7 @@ Result	PmergeMe::mergeInsertSort(char **argv)
 	}
 
 	res.vTime = sort(res.v);
-	// res.dqTime = sort(res.dq);
+	res.dqTime = sort(res.dq);
 
 	return res;
 }

@@ -12,14 +12,43 @@ void    print_result(Result res)
             std::cout << std::endl;
     }
 
-    std::cout << YELLOW << "After:  ";
+    int prev = *res.v.begin();
+    std::cout << YELLOW << "After (std::vector):  ";
     for (it = res.v.begin(); it != res.v.end(); ++it) {
         std::cout << BLUE << *it << RESET;
+        if (*it < prev)
+        {
+            std::cout << RED << std::endl << "not sorted!" << RESET << std::endl;
+            exit(1);
+        }
+        else
+            prev = *it;
         if ((it + 1) != res.v.end())
             std::cout << ", ";
         else
             std::cout << std::endl;
     }
+    std::cout << GREEN << "sorted!" << RESET << std::endl;
+    
+    std::deque<int>::iterator itdq;
+    std::cout << YELLOW << "After (std::deque):  ";
+
+    prev = *res.dq.begin();
+    for (itdq = res.dq.begin(); itdq != res.dq.end(); ++itdq) {
+        std::cout << BLUE << *itdq << RESET;
+        if (*itdq < prev)
+        {
+            std::cout << RED << std::endl << "not sorted!" << RESET << std::endl;
+            exit(1);
+        }
+        else
+            prev = *it;
+        if ((itdq + 1) != res.dq.end())
+            std::cout << ", ";
+        else
+            std::cout << std::endl;   
+    }
+    std::cout << GREEN << "sorted!" << RESET << std::endl;
 
     std::cout << YELLOW << "Time to process a range of 5 elements with std::" 
         << BLUE << "vector" << YELLOW << " is: " 
@@ -44,7 +73,7 @@ int main(int argc, char **argv)
     try
     {
         Result res = sorter.mergeInsertSort(argv + 1);
-        // print_result(res);
+        print_result(res);
     }
     catch(const std::exception& e)
     {

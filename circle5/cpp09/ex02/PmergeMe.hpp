@@ -115,6 +115,9 @@ class	PmergeMe
 		template <class T>
 		void	merge_main_pend(T &main, T pend, size_t group);
 
+		template <class T>
+		void	merge_main_nonparticipating(T &main, T nonParticipating);
+
 		int		safer_stoi(const std::string &str);
 
 		class invalidArgumentException : public std::exception
@@ -127,22 +130,27 @@ class	PmergeMe
 template <class T>
 double	PmergeMe::sort(T &c)
 {
+	// std::cout << "size is: " << c.size() << std::endl;
 	int level = 1;
 	while (pair_sorting(c, level++))
 		;
 	level--;
-	std::cout << std::endl;
+	level--;
+	// std::cout << std::endl;
 	while (--level)
+	{
 		init_and_insert(c, level);
+		typename T::iterator it;
+		std::cout << "size is: " << c.size() << std::endl;
+		for (it = c.begin(); it != c.end(); ++it) {
+			std::cout << BLUE << *it << RESET;
+			if ((it + 1) != c.end())
+				std::cout << ", ";
+			else
+				std::cout << std::endl;
+		}
+	}
 	
-	typename T::iterator it;
-    for (it = c.begin(); it != c.end(); ++it) {
-        std::cout << BLUE << *it << RESET;
-        if ((it + 1) != c.end())
-            std::cout << ", ";
-        else
-            std::cout << std::endl;
-    }
 	return 0;
 }
 
@@ -153,19 +161,19 @@ bool	PmergeMe::pair_sorting(T &c, int level)
 	size_t	b = (group / 2) - 1;
 	size_t	a = group - 1;
 
-	std::cout << "group: " << group
-		<< ", b: " << b
-		<< ", a: " << a << std::endl;
+	// std::cout << "group: " << group
+		// << ", b: " << b
+		// << ", a: " << a << std::endl;
 
-	typename T::iterator it;
-	std::cout << YELLOW << "Before level " << level << ": ";
-    for (it = c.begin(); it != c.end(); ++it) {
-        std::cout << BLUE << *it << RESET;
-        if ((it + 1) != c.end())
-            std::cout << ", ";
-        else
-            std::cout << std::endl;
-    }
+	// typename T::iterator it;
+	// // std::cout << YELLOW << "Before level " << level << ": ";
+    // for (it = c.begin(); it != c.end(); ++it) {
+    //     // std::cout << BLUE << *it << RESET;
+    //     if ((it + 1) != c.end())
+    //         // std::cout << ", ";
+    //     else
+    //         // std::cout << std::endl;
+    // }
 
 	if (c.size() < group)
 		return false;
@@ -179,7 +187,7 @@ bool	PmergeMe::pair_sorting(T &c, int level)
 			break ;
 		if (c[i + b] > c[i + a])
 		{
-			std::cout << c[i + b] << " > " << c[i + a] << std::endl;
+			// std::cout << c[i + b] << " > " << c[i + a] << std::endl;
 			for (j = 0; j != group / 2; ++j)
 				std::swap(c[i + b - j], c[i + a - j]);
 		}
@@ -194,17 +202,18 @@ void	PmergeMe::init_and_insert(T &c, int level)
 	size_t	b = (group / 2) - 1;
 	size_t	a = group - 1;
 
-	std::cout << "group: " << group
-		<< ", b: " << b
-		<< ", a: " << a << std::endl;
+	// std::cout << "group: " << group
+		// << ", b: " << b
+		// << ", a: " << a << std::endl;
 	
 	T	main = get_main(c, group, a, b);
 	T	pend = get_pend(c, group, b);
 	T	nonParticipating = get_non_participating(c, group, a, b);
 
-	// print_all(c, main, pend, nonParticipating, level);
+	print_all(c, main, pend, nonParticipating, level);
 
 	merge_main_pend(main, pend, group);
+	merge_main_nonparticipating(main, nonParticipating);
 
 	// print_all(c, main, pend, nonParticipating, level);
 	c = main;
@@ -246,20 +255,24 @@ T	PmergeMe::get_non_participating(T &c, size_t group, size_t a, size_t b)
 	else
 		i = b - group + 1;
 
+	// std::cout << a << ", " << b << ", " << i <<std::endl;
+
 	if (i == c.size())
 		return (non_participating);
 
-	size_t j = i;
-	while (j < static_cast<size_t>(c.size()) && j - i != group / 2)
-		j++;
-	if (j - i != group / 2)
+	for (; i < c.size(); ++i)
 	{
-		for (; i <= j; ++i)
-		{
-			non_participating.push_back(c[i]);
-			break ;
-		}
+		non_participating.push_back(c[i]);
 	}
+	
+	// typename T::iterator it;
+	// for (it = non_participating.begin(); it != non_participating.end(); ++it) {
+	// 	// std::cout << BLUE << *it << RESET;
+	// 	if ((it + 1) != non_participating.end())
+	// 		// std::cout << ", ";
+	// 	else
+	// 		// std::cout << std::endl;
+	// }
 	return (non_participating);
 }
 
@@ -270,41 +283,43 @@ void	PmergeMe::merge_main_pend(T &main, T pend, size_t group)
 	size_t	pend_i = 0;
 	size_t	bound = 0;
 
-	while (pend_i < pend.size())
+	pend_i = (jsnum[jsnum_i] * (group / 2)) - group / 2 - 1;
+	bound = (jsnum[jsnum_i] * (group / 2)) - 1;
+	while (1)
 	{
-		pend_i = (jsnum[jsnum_i] * (group / 2)) - group / 2 - 1;
-		bound = (jsnum[jsnum_i] * (group / 2)) - 1;
-
-		std::cout << pend_i << ", " << bound << std::endl;
+		// std::cout << pend_i << ", " << bound << std::endl;
 
 		if (bound > main.size())
 			bound = main.size();
-		if (pend_i > pend.size())
+		if (pend_i >= pend.size())
 		{
 			reverse_merge_main_pend(main, pend, group, jsnum_i - 1);
 			break ;
 		}
 		for (size_t i = jsnum[jsnum_i - 1]; i < jsnum[jsnum_i]; ++i)
 		{
-			std::cout << "one" << std::endl;
 			bool inserted = false;
 			for (size_t main_i = group / 2 - 1; main_i <= bound; main_i += group / 2)
 			{
-				std::cout << main[main_i] << ", " << pend[pend_i] << std::endl;
+				// std::cout << main[main_i] << ", " << pend[pend_i] << std::endl;
 				if (main_i == group / 2 - 1 && main[main_i] > pend[pend_i])
 				{
-					std::cout << "case 1" << std::endl;
 					for (size_t j = 1; j <= group / 2; ++j)
 						main.insert(main.begin() + j - 1, pend[pend_i - group / 2 + j]);
 					inserted = true;	
+					// bound += group/2;
 					break ;
 				}
 				else if (main[main_i] > pend[pend_i])
 				{
-					std::cout << "case 2" << std::endl;
-					for (size_t j = 1; j <= group / 2; ++j)
-						main.insert(main.begin() + main_i, pend[pend_i - group / 2 + j]);
+					// std::cout << "nyeeeeee" << std::endl;
+					for (size_t j = group / 2; j >= 1; --j)
+					{
+						main.insert(main.begin() + main_i - group / 2 + 1 , pend[pend_i - group / 2 + j]);
+						// std::cout << pend_i - group / 2 + j << std::endl;
+					}
 					inserted = true;
+					// bound += group/2;
 					break ;
 				}
 			}
@@ -316,41 +331,71 @@ void	PmergeMe::merge_main_pend(T &main, T pend, size_t group)
 			pend_i -= (group / 2);
 		}
 		jsnum_i++;
+		// std::cout << "hello";
+		pend_i = (jsnum[jsnum_i] * (group / 2)) - group / 2 - 1;
+		bound = ((jsnum[jsnum_i] + (jsnum[jsnum_i] - jsnum[jsnum_i - 1])) * (group / 2)) - 1;
+		// std::cout << jsnum_i << ", " << pend_i << std::endl;
+
+		// typename T::iterator it;
+		// // std::cout << "size is: " << main.size() << std::endl;
+		// for (it = main.begin(); it != main.end(); ++it) {
+		// 	// std::cout << BLUE << *it << RESET;
+		// 	if ((it + 1) != main.end())
+		// 		// std::cout << ", ";
+		// 	else
+		// 		// std::cout << std::endl;
+		// }
 	}
 }
 
 template <class T>
 void	PmergeMe::reverse_merge_main_pend(T &main, T pend, size_t group, size_t jsnum_i)
 {
+	// std::cout << "jsnum: " << jsnum[jsnum_i] << std::endl;
 	size_t 	pend_i = ((jsnum[jsnum_i] + 1) * (group / 2)) - group / 2 - 1;
-	size_t 	bound = ((jsnum[jsnum_i] + 1) * (group / 2)) - 1;
+	// size_t 	bound = ((jsnum[jsnum_i] + 1) * (group / 2)) - 1;
 
-	if (bound > main.size())
-		bound = main.size();
+	// if (bound > main.size())
+		size_t bound = main.size();
 
-	std::cout << pend_i << ", " << bound << std::endl;
+	// std::cout << pend_i << ", " << bound << std::endl;
 	while (pend_i < pend.size())
 	{
 		bool inserted = false;
-		for (size_t main_i = bound; main_i > 0; main_i -= group / 2)
+		for (size_t main_i = bound - 1; main_i >= 0; main_i -= group / 2)
 		{
+			// std::cout << main[main_i] << ", " << pend[pend_i] << std::endl;
 			if (main[main_i] < pend[pend_i])
 			{
 				for (size_t j = 1; j <= group / 2; ++j)
 					main.insert(main.begin() + main_i + j, pend[pend_i - group / 2 + j]);
 
-				pend_i += (group / 2);
 				inserted = true;
 				break ;
 			}
 		}
 		if (inserted == false)
 		{
-			for (size_t j = 0; j < group / 2; ++j)
-				main.insert(main.end(), pend[pend_i - group / 2 - 1 + j]);
+			for (size_t j = 1; j <= group / 2; ++j)
+				main.insert(main.begin(), pend[pend_i - group / 2 + j]);
 		}
+		// typename T::iterator it;
+		// // std::cout << "size is: " << main.size() << std::endl;
+		// for (it = main.begin(); it != main.end(); ++it) {
+		// 	// std::cout << BLUE << *it << RESET;
+		// 	if ((it + 1) != main.end())
+		// 		// std::cout << ", ";
+		// 	else
+		// 		// std::cout << std::endl;
+		// }
 		pend_i += (group / 2);
 	}
+}
+
+template <class T>
+void	PmergeMe::merge_main_nonparticipating(T &main, T nonParticipating)
+{
+	main.insert(main.end(), nonParticipating.begin(), nonParticipating.end());
 }
 
 #endif

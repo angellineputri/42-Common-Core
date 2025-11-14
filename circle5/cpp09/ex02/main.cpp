@@ -9,7 +9,7 @@ void    print_result(Result res)
         if ((it + 1) != res.before.end())
             std::cout << ", ";
         else
-            std::cout << std::endl;
+            std::cout << std::endl << std::endl;
     }
 
     int prev = *res.v.begin();
@@ -28,7 +28,7 @@ void    print_result(Result res)
         else
             std::cout << std::endl;
     }
-    std::cout << GREEN << "sorted!" << RESET << std::endl;
+    std::cout << GREEN << "sorted!" << RESET << std::endl << std::endl;
     
     std::deque<int>::iterator itdq;
     std::cout << YELLOW << "After (std::deque):  ";
@@ -48,15 +48,21 @@ void    print_result(Result res)
         else
             std::cout << std::endl;   
     }
-    std::cout << GREEN << "sorted!" << RESET << std::endl;
+    std::cout << GREEN << "sorted!" << RESET << std::endl << std::endl;
 
-    std::cout << YELLOW << "Time to process a range of 5 elements with std::" 
+    std::cout << YELLOW << "Time to process a range of " << res.size << " elements with std::" 
         << BLUE << "vector" << YELLOW << " is: " 
         << BLUE << res.vTime << YELLOW << " us" << RESET << std::endl;
+    std::cout << YELLOW << "Number of comparison with std::" 
+        << BLUE << "vector" << YELLOW << " is: " 
+        << BLUE << res.vComparison << RESET << std::endl << std::endl;
 
-    std::cout << YELLOW << "Time to process a range of 5 elements with std::" 
+    std::cout << YELLOW << "Time to process a range of " << res.size << " elements with std::" 
         << BLUE << "deque" << YELLOW << " is: " 
         << BLUE << res.dqTime << YELLOW << " us" << RESET << std::endl;
+    std::cout << YELLOW << "Number of comparison with std::" 
+        << BLUE << "deque" << YELLOW << " is: " 
+        << BLUE << res.dqComparison << RESET << std::endl;
 }
 
 int main(int argc, char **argv)

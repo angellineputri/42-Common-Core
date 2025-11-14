@@ -13,6 +13,7 @@
 #include <vector>
 #include <math.h>
 #include <limits.h>
+#include <sys/time.h>
 
 #define RESET	"\033[0m"
 #define RED		"\033[31m"
@@ -28,6 +29,9 @@ struct Result
 	std::deque<int>		dq;
 	double				vTime;
 	double				dqTime;
+	int					size;
+	int					vComparison;
+	int					dqComparison;
 };
 
 template <class T>
@@ -95,13 +99,13 @@ class	PmergeMe
 		Result	load_data(char **argv);
 
 		template <class T>
-		double	sort(T &c);
+		void	sort(T &c, int &comparison);
 
 		template <class T>
-		bool	pair_sorting(T &c, int level);
+		bool	pair_sorting(T &c, int level, int &comparison);
 
 		template <class T>
-		void	init_and_insert(T &c, int level);
+		void	init_and_insert(T &c, int level, int &comparison);
 
 		template <class T>
 		T		get_main(T &c, size_t group, size_t &a, size_t b);
@@ -113,10 +117,10 @@ class	PmergeMe
 		T		get_non_participating(T &c, size_t group, size_t a, size_t b);
 
 		template <class T>
-		void	reverse_merge_main_pend(T &main, T pend, size_t group, size_t jsnum_i);
+		void	reverse_merge_main_pend(T &main, T pend, size_t group, size_t jsnum_i, int &comparison);
 
 		template <class T>
-		void	merge_main_pend(T &main, T pend, size_t group);
+		void	merge_main_pend(T &main, T pend, size_t group, int &comparison);
 
 		template <class T>
 		void	merge_main_nonparticipating(T &main, T nonParticipating);
@@ -131,34 +135,34 @@ class	PmergeMe
 };
 
 template <class T>
-double	PmergeMe::sort(T &c)
+void	PmergeMe::sort(T &c, int &comparison)
 {
 	// std::cout << "size is: " << c.size() << std::endl;
 	int level = 1;
-	while (pair_sorting(c, level++))
+	while (pair_sorting(c, level++, comparison))
 		;
 	level--;
-	level--;
+	// level--;
 	// std::cout << std::endl;
 	while (--level)
 	{
-		init_and_insert(c, level);
-		typename T::iterator it;
-		std::cout << "size is: " << c.size() << std::endl;
-		for (it = c.begin(); it != c.end(); ++it) {
-			std::cout << BLUE << *it << RESET;
-			if ((it + 1) != c.end())
-				std::cout << ", ";
-			else
-				std::cout << std::endl;
-		}
+		init_and_insert(c, level, comparison);
+		// typename T::iterator it;
+		// std::cout << "size is: " << c.size() << std::endl;
+		// for (it = c.begin(); it != c.end(); ++it) {
+		// 	std::cout << BLUE << *it << RESET;
+		// 	if ((it + 1) != c.end())
+		// 		std::cout << ", ";
+		// 	else
+		// 		std::cout << std::endl;
+		// }
 	}
 	
-	return 0;
+	return ;
 }
 
 template <class T>
-bool	PmergeMe::pair_sorting(T &c, int level)
+bool	PmergeMe::pair_sorting(T &c, int level, int &comparison)
 {
 	size_t	group = std::pow(2, level);
 	size_t	b = (group / 2) - 1;
@@ -168,15 +172,15 @@ bool	PmergeMe::pair_sorting(T &c, int level)
 		// << ", b: " << b
 		// << ", a: " << a << std::endl;
 
-	typename T::iterator it;
-	std::cout << YELLOW << "Before level " << level << ": ";
-    for (it = c.begin(); it != c.end(); ++it) {
-        std::cout << BLUE << *it << RESET;
-        if ((it + 1) != c.end())
-            std::cout << ", ";
-        else
-            std::cout << std::endl;
-    }
+	// typename T::iterator it;
+	// std::cout << YELLOW << "Before level " << level << ": ";
+    // for (it = c.begin(); it != c.end(); ++it) {
+    //     std::cout << BLUE << *it << RESET;
+    //     if ((it + 1) != c.end())
+    //         std::cout << ", ";
+    //     else
+    //         std::cout << std::endl;
+    // }
 
 	if (c.size() < group)
 		return false;
@@ -188,6 +192,7 @@ bool	PmergeMe::pair_sorting(T &c, int level)
 			j++;
 		if (j - i != group)
 			break ;
+		comparison++;
 		if (c[i + b] > c[i + a])
 		{
 			// std::cout << c[i + b] << " > " << c[i + a] << std::endl;
@@ -199,7 +204,7 @@ bool	PmergeMe::pair_sorting(T &c, int level)
 }
 
 template <class T>
-void	PmergeMe::init_and_insert(T &c, int level)
+void	PmergeMe::init_and_insert(T &c, int level, int &comparison)
 {
 	size_t	group = std::pow(2, level);
 	size_t	b = (group / 2) - 1;
@@ -213,12 +218,12 @@ void	PmergeMe::init_and_insert(T &c, int level)
 	T	pend = get_pend(c, group, b);
 	T	nonParticipating = get_non_participating(c, group, a, b);
 
-	print_all(c, main, pend, nonParticipating, level);
+	// print_all(c, main, pend, nonParticipating, level);
 
-	merge_main_pend(main, pend, group);
+	merge_main_pend(main, pend, group, comparison);
 
-	std::cout << "after merge main pend" << std::endl;
-	print_all(c, main, pend, nonParticipating, level);
+	// std::cout << "after merge main pend" << std::endl;
+	// print_all(c, main, pend, nonParticipating, level);
 	merge_main_nonparticipating(main, nonParticipating);
 
 	c = main;
@@ -282,7 +287,7 @@ T	PmergeMe::get_non_participating(T &c, size_t group, size_t a, size_t b)
 }
 
 template <class T>
-void	PmergeMe::merge_main_pend(T &main, T pend, size_t group)
+void	PmergeMe::merge_main_pend(T &main, T pend, size_t group, int &comparison)
 {
 	size_t	jsnum_i = 1;
 	size_t	pend_i = 0;
@@ -299,33 +304,33 @@ void	PmergeMe::merge_main_pend(T &main, T pend, size_t group)
 			bound = main.size();
 		if (pend_i >= pend.size())
 		{
-			std::cout << "bef reverse main pend" << std::endl;
+			// std::cout << "bef reverse main pend" << std::endl;
 			typename T::iterator it;
 
-			std::cout << YELLOW << "main: " << ": ";
-			if (main.size() == 0)
-				std::cout << RESET << std::endl;
-			for (it = main.begin(); it != main.end(); ++it) {
-				std::cout << BLUE << *it << RESET;
-				if ((it + 1) != main.end())
-					std::cout << ", ";
-				else
-					std::cout << std::endl;
-			}
+			// std::cout << YELLOW << "main: " << ": ";
+			// if (main.size() == 0)
+			// 	std::cout << RESET << std::endl;
+			// for (it = main.begin(); it != main.end(); ++it) {
+			// 	std::cout << BLUE << *it << RESET;
+			// 	if ((it + 1) != main.end())
+			// 		std::cout << ", ";
+			// 	else
+			// 		std::cout << std::endl;
+			// }
 
-			std::cout << YELLOW << "pend: " << ": ";
-			if (pend.size() == 0)
-				std::cout << RESET << std::endl;
-			for (it = pend.begin(); it != pend.end(); ++it) {
-				std::cout << BLUE << *it << RESET;
-				if ((it + 1) != pend.end())
-					std::cout << ", ";
-				else
-					std::cout << std::endl;
-			}
+			// std::cout << YELLOW << "pend: " << ": ";
+			// if (pend.size() == 0)
+			// 	std::cout << RESET << std::endl;
+			// for (it = pend.begin(); it != pend.end(); ++it) {
+			// 	std::cout << BLUE << *it << RESET;
+			// 	if ((it + 1) != pend.end())
+			// 		std::cout << ", ";
+			// 	else
+			// 		std::cout << std::endl;
+			// }
 
-			std::cout << std::endl;
-			reverse_merge_main_pend(main, pend, group, jsnum_i - 1);
+			// std::cout << std::endl;
+			reverse_merge_main_pend(main, pend, group, jsnum_i - 1, comparison);
 			break ;
 		}
 		for (size_t i = jsnum[jsnum_i - 1]; i < jsnum[jsnum_i]; ++i)
@@ -334,6 +339,7 @@ void	PmergeMe::merge_main_pend(T &main, T pend, size_t group)
 			for (size_t main_i = group / 2 - 1; main_i <= bound; main_i += group / 2)
 			{
 				// std::cout << main[main_i] << ", " << pend[pend_i] << std::endl;
+				comparison++;
 				if (main_i == group / 2 - 1 && main[main_i] > pend[pend_i])
 				{
 					for (size_t j = 1; j <= group / 2; ++j)
@@ -381,7 +387,7 @@ void	PmergeMe::merge_main_pend(T &main, T pend, size_t group)
 }
 
 template <class T>
-void	PmergeMe::reverse_merge_main_pend(T &main, T pend, size_t group, size_t jsnum_i)
+void	PmergeMe::reverse_merge_main_pend(T &main, T pend, size_t group, size_t jsnum_i, int &comparison)
 {
 	// std::cout << "jsnum: " << jsnum[jsnum_i] << std::endl;
 	size_t 	pend_i = ((jsnum[jsnum_i] + 1) * (group / 2)) - group / 2 - 1;
@@ -394,10 +400,11 @@ void	PmergeMe::reverse_merge_main_pend(T &main, T pend, size_t group, size_t jsn
 	while (pend_i < pend.size())
 	{
 		bool inserted = false;
-		for (size_t main_i = main.size() - 1; (main_i >= 0 && static_cast<int>(main_i) - static_cast<int>(group / 2) >= 0); main_i -= group / 2)
+		for (int main_i = main.size() - 1; main_i >= 0; main_i -= group / 2)
 		{
-			// std::cout << main_i << ", " << pend_i << std::endl;
-			std::cout << main[main_i] << ", " << pend[pend_i] << std::endl;
+			// std::cout << main_i << ", " << pend_i << std::endl; 
+			// std::cout << main[main_i] << ", " << pend[pend_i] << std::endl;
+			comparison++;
 			if (main[main_i] < pend[pend_i])
 			{
 				for (size_t j = 1; j <= group / 2; ++j)
@@ -409,7 +416,7 @@ void	PmergeMe::reverse_merge_main_pend(T &main, T pend, size_t group, size_t jsn
 		}
 		if (inserted == false)
 		{
-			std::cout << "nye" << std::endl;
+			// std::cout << "nye" << std::endl;
 			for (size_t j = group / 2; j >= 1; --j)
 				main.insert(main.begin(), pend[pend_i - group / 2 + j]);
 		}

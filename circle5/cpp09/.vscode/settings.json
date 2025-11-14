@@ -70,6 +70,8 @@
         "utility": "cpp",
         "numbers": "cpp",
         "ranges": "cpp",
-        "span": "cpp"
+        "span": "cpp",
+        "charconv": "cpp",
+        "forward_list": "cpp"
     }
 }

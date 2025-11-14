@@ -36,9 +36,26 @@ Result	PmergeMe::mergeInsertSort(char **argv)
 		throw ;
 	}
 
-	res.vTime = sort(res.v);
-	res.dqTime = sort(res.dq);
+	res.vComparison = 0;
+	res.dqComparison = 0;
 
+    struct timeval start, end;
+
+    gettimeofday(&start, NULL);
+	sort(res.v, res.vComparison);
+	gettimeofday(&end, NULL);
+
+    long seconds = end.tv_sec - start.tv_sec;
+    long usec = end.tv_usec - start.tv_usec;
+    res.vTime = seconds * 1000000 + usec;
+
+	gettimeofday(&start, NULL);
+	sort(res.dq, res.dqComparison);
+	gettimeofday(&end, NULL);
+
+	seconds = end.tv_sec - start.tv_sec;
+    usec = end.tv_usec - start.tv_usec;
+    res.dqTime = seconds * 1000000 + usec;
 	return res;
 }
 
@@ -71,6 +88,7 @@ Result	PmergeMe::load_data(char **argv)
 		v->push_back(converted);
 		dq->push_back(converted);
 	}
+	res.size = v->size();
 	return res;
 }
 

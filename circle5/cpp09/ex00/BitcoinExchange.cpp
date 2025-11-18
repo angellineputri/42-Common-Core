@@ -92,6 +92,8 @@ void	BitcoinExchange::processInputFile(fileMeta data)
 		if (lineNumber == 1) {
 			try {
 				getDelimiter(line, data);
+				if (data.delimiter != " | ")
+					throw WrongHeaderException();
 			}
 			catch(const std::exception& e) {
 				throw ;
@@ -102,7 +104,13 @@ void	BitcoinExchange::processInputFile(fileMeta data)
 
 		fileElements *fe = validateLine(data, line, lineNumber);
 		if (fe) {
-			printResult(fe->date, fe->value);
+			try {
+				printResult(fe->date, fe->value);
+			}
+			catch(const std::exception& e) {
+				logError(data.filename, e.what(), fe->date.str, lineNumber);
+			}
+			
 			delete fe;
 		}
 		lineNumber++;
@@ -114,6 +122,7 @@ void	BitcoinExchange::processInputFile(fileMeta data)
 void	BitcoinExchange::printResult(dateFormat date, float value)
 {
 	std::map<std::string, float>::const_iterator	closest_date;
+	closest_date = database.end();
 
 	for (std::map<std::string, float>::const_iterator it = database.begin(); it != database.end(); ++it) 
 	{
@@ -144,6 +153,8 @@ void	BitcoinExchange::printResult(dateFormat date, float value)
 		}
     }
 
+	if (closest_date == database.end())
+		throw ExchangeRateNotFound();
 	float result = closest_date->second * value;
 	std::cout << BLUE << "[" << date.str << "]" RESET << " => " << value << " = " << GREEN << result << RESET
 		<< " (taken from " << YELLOW << closest_date->first << RESET 
@@ -289,3 +300,9 @@ const char* BitcoinExchange::WrongHeaderException::what() const throw()
 {
 	return ("Error: wrong header in file");
 }
+
+const char* BitcoinExchange::ExchangeRateNotFound::what() const throw()
+{
+	return ("date, no exchange rate can be found for");
+}
+

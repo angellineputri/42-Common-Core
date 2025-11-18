@@ -1,20 +1,14 @@
-#include "easyfind.hpp"
+#ifndef EASYFIND_TPP
+# define EASYFIND_TPP
 
 template <typename T>
-void    iter(type *arr, int len, func_type f)
+typename T::iterator easyfind(T &container, int value)
 {
-    if (!arr)
-        throw std::runtime_error("Error: array passed is null");
-
-    for (int i = 0; i < len; ++i)
-    {
-        try
-        {
-            f(arr[i]);
-        }
-        catch(const std::exception& e)
-        {
-            throw std::runtime_error("Error: failed to apply function");
-        }
-    }
+    typename T::iterator output = std::find(container.begin(), container.end(), value);
+    if (output == container.end())
+        throw std::runtime_error("value not found inside the container!");
+    else
+        return (output);
 }
+
+#endif

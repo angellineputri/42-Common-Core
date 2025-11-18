@@ -36,7 +36,6 @@ struct fileElements
 	float		value;
 };
 
-
 class	BitcoinExchange
 {
 	public:
@@ -69,6 +68,12 @@ class	BitcoinExchange
 		};	
 
 		class WrongHeaderException : public std::exception
+		{
+			public:
+				const char* what() const throw();
+		};
+
+		class ExchangeRateNotFound : public std::exception
 		{
 			public:
 				const char* what() const throw();

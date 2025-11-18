@@ -584,10 +584,6 @@ void    PmergeMe::print_result(Result res)
             std::cout << std::endl << std::endl;
     }
 
-    std::cout << YELLOW << "Number of comparison with std::" 
-    << BLUE << "vector" << YELLOW << " is: " 
-    << BLUE << res.vComparison << RESET << std::endl << std::endl;
-
     int prev = *res.v.begin();
     std::cout << YELLOW << "After (std::vector):  ";
     for (it = res.v.begin(); it != res.v.end(); ++it) {
@@ -639,7 +635,4 @@ void    PmergeMe::print_result(Result res)
     std::cout << YELLOW << "Number of comparison with std::" 
         << BLUE << "deque" << YELLOW << " is: " 
         << BLUE << res.dqComparison << RESET << std::endl;
-
-    if (res.vTime > res.dqTime)
-        std::cout << RED << "somthings wrong..." << RESET << std::endl;
 }

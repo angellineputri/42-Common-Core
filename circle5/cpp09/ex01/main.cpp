@@ -14,7 +14,7 @@ int main(int argc, char **argv)
     try
     {
         int result = rpn.calculateRPN(argv[1]);
-        std::cout << BLUE << "result is " << YELLOW << result << std::endl;
+        std::cout << BLUE << "result is " << YELLOW << result << RESET << std::endl;
     }
     catch(const std::exception& e)
     {

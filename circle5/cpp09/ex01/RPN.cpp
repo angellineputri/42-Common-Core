@@ -21,7 +21,7 @@ int	RPN::calculateRPN(std::string expression)
 		if (!token.empty())
 		{
 			if (isNumber(token))
-				st.push(std::stoi(token));
+				st.push(std::atoi(token.c_str()));
 			else if (isOperator(token))
 			{
 				try {

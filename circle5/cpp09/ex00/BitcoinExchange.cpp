@@ -44,7 +44,7 @@ BitcoinExchange&	BitcoinExchange::operator=(const BitcoinExchange &other)
 
 std::map<std::string, float>	BitcoinExchange::tokenizer(fileMeta data)
 {
-	std::ifstream	file(data.filename);
+	std::ifstream	file(data.filename.c_str());
     if (!file.is_open()) {
 		throw FailedToOpenFileException() ;
     }
@@ -79,7 +79,7 @@ std::map<std::string, float>	BitcoinExchange::tokenizer(fileMeta data)
 
 void	BitcoinExchange::processInputFile(fileMeta data)
 {
-	std::ifstream	file(data.filename);
+	std::ifstream	file(data.filename.c_str());
     if (!file.is_open()) {
 		throw FailedToOpenFileException() ;
     }
@@ -174,7 +174,7 @@ fileElements	*BitcoinExchange::validateLine(fileMeta data, std::string line, int
 		fe->date.str = line.substr(0, delimiterPos);
 		std::string valueStr = line.substr(delimiterPos + data.delimiter.size());
 		try {
-			fe->value = std::stof(valueStr);
+			fe->value = std::atof(valueStr.c_str());
 		} catch(const std::exception& e) {
 			logError(data.filename, data.header2, valueStr, lineNumber);
 			valid = false;
@@ -194,7 +194,7 @@ fileElements	*BitcoinExchange::validateLine(fileMeta data, std::string line, int
 			return fe;
 	}
 	delete fe;
-	return nullptr;
+	return NULL;
 }
 
 fileMeta BitcoinExchange::createMetaData(std::string filename, std::string header1, std::string header2, bool limitValue)
@@ -240,9 +240,9 @@ bool	BitcoinExchange::checkDate(dateFormat &date)
 	date.year = date.str.substr(0, 4);
 	date.mon = date.str.substr(5, 2);
 	date.date = date.str.substr(8, 2);
-	int monInt = std::stoi(date.mon);
-	int dateInt = std::stoi(date.date);
-	int yearInt = std::stoi(date.year);
+	int monInt = std::atoi(date.mon.c_str());
+	int dateInt = std::atoi(date.date.c_str());
+	int yearInt = std::atoi(date.year.c_str());
 
 	std::string	element[3] = {date.year, date.mon, date.date};
 	for (int i = 0; i < 3; ++i)

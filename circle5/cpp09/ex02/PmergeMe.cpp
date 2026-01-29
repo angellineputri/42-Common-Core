@@ -24,7 +24,11 @@ PmergeMe&	PmergeMe::operator=(const PmergeMe &other)
 {
 	// std::cout << BLUE << "PmergeMe copy assignment operator called" << RESET << std::endl;
 	if (this != &other)
+    {
+        for (int i = 0; i < 19; ++i)
+            this->jsnum[i] = other.jsnum[i];
 		return (*this);
+    }
 	return (*this);
 }
 
@@ -462,12 +466,20 @@ void	PmergeMe::merge_main_pend(std::deque<int>  &main, std::deque<int>  pend, si
 void    PmergeMe::insert_and_update(size_t group, std::deque<int>  &main, std::deque<int>  &pend, int i, int pos, std::deque<int>  &a, std::deque<int>  &b)
 {
     int pair = static_cast<int>(group) / 2;
-    int ib = abs(b[i]);
+    int ib = std::abs(b[i]);
 
-    // std::cout << pos << std::endl;
-    // std::cout << ib << ", " << *(pend.begin() + ib - pair + 1) << ", " << *(pend.begin() + ib) << std::endl;
-    main.insert(main.begin() + pos + 1, pend.begin() + ib - pair + 1, pend.begin() + ib + 1);
-    // printc(main, "main");
+    int start = ib - pair + 1;
+    int end   = ib;
+
+    std::deque<int>::iterator it = main.begin();
+    for (int step = 0; step <= pos && it != main.end(); ++step)
+        ++it;
+
+    for (int k = start; k <= end; ++k)
+    {
+        it = main.insert(it, pend[k]);
+        ++it;
+    }
 
     b[i] = pos + pair;
 
@@ -476,9 +488,6 @@ void    PmergeMe::insert_and_update(size_t group, std::deque<int>  &main, std::d
         if (a[j] > pos)
             a[j] += pair;
     }
-
-    // printc(a, "a");
-    // printc(b, "b");
 }
 
 void	PmergeMe::merge_main_nonparticipating(std::deque<int>  &main, std::deque<int>  nonParticipating)
@@ -575,52 +584,58 @@ const char* PmergeMe::invalidArgumentException::what() const throw()
 void    PmergeMe::print_result(Result res)
 {   
     std::vector<int>::iterator it;
-    std::cout << YELLOW << "Before: ";
-    for (it = res.before.begin(); it != res.before.end(); ++it) {
-        std::cout << BLUE << *it << RESET;
-        if ((it + 1) != res.before.end())
-            std::cout << ", ";
-        else
-            std::cout << std::endl << std::endl;
+
+    if (!res.before.empty())
+    {
+        std::cout << YELLOW << "Before: ";
+        for (it = res.before.begin(); it != res.before.end(); ++it) {
+            std::cout << BLUE << *it << RESET;
+            if ((it + 1) != res.before.end())
+                std::cout << ", ";
+            else
+                std::cout << std::endl << std::endl;
+        }
     }
 
-    int prev = *res.v.begin();
-    std::cout << YELLOW << "After (std::vector):  ";
-    for (it = res.v.begin(); it != res.v.end(); ++it) {
-        std::cout << BLUE << *it << RESET;
-        if (*it < prev)
-        {
-            std::cout << RED << std::endl << "not sorted!" << RESET << std::endl;
-            exit(1);
+    int prev; 
+    if (!res.v.empty())
+    {
+        prev = *res.v.begin();
+        std::cout << YELLOW << "After (std::vector):  ";
+        for (it = res.v.begin(); it != res.v.end(); ++it) {
+            std::cout << BLUE << *it << RESET;
+            if (*it < prev)
+            {
+                std::cout << RED << std::endl << "not sorted!" << RESET << std::endl;
+                exit(1);
+            }
+            else
+                prev = *it;
+            if ((it + 1) != res.v.end())
+                std::cout << ", ";
+            else
+                std::cout << std::endl;
         }
-        else
-            prev = *it;
-        if ((it + 1) != res.v.end())
-            std::cout << ", ";
-        else
-            std::cout << std::endl;
+        std::cout << GREEN << "sorted!" << RESET << std::endl << std::endl;
     }
-    std::cout << GREEN << "sorted!" << RESET << std::endl << std::endl;
     
     std::deque<int>::iterator itdq;
-    std::cout << YELLOW << "After (std::deque):  ";
+    if (!res.dq.empty())
+    {
+        std::cout << YELLOW << "After (std::deque):  ";
+    
+        prev = *res.dq.begin();
+        for (size_t i = 0; i < res.dq.size(); ++i) {
+            int val = res.dq[i];
+            std::cout << BLUE << val << RESET;
 
-    prev = *res.dq.begin();
-    for (itdq = res.dq.begin(); itdq != res.dq.end(); ++itdq) {
-        std::cout << BLUE << *itdq << RESET;
-        if (*itdq < prev)
-        {
-            std::cout << RED << std::endl << "not sorted!" << RESET << std::endl;
-            exit(1);
+            if (i + 1 < res.dq.size())
+                std::cout << ", ";
+            else
+                std::cout << std::endl;
         }
-        else
-            prev = *itdq;
-        if ((itdq + 1) != res.dq.end())
-            std::cout << ", ";
-        else
-            std::cout << std::endl;   
+        std::cout << GREEN << "sorted!" << RESET << std::endl << std::endl;
     }
-    std::cout << GREEN << "sorted!" << RESET << std::endl << std::endl;
 
     std::cout << YELLOW << "Time to process a range of " << res.size << " elements with std::" 
         << BLUE << "vector" << YELLOW << " is: " 

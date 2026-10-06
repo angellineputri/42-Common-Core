@@ -1,0 +1,33 @@
+# macOS
+.DS_Store
+Icon?
+._*
+
+# Compiled output
+*.o
+*.a
+a.out
+
+# IDE
+.vscode/
+.idea/
+
+# Executables — listed by path to avoid matching same-named project directories
+circle2/pipex/pipex
+circle2/pipex/pipex_bonus
+circle2/push_swap/push_swap
+circle2/push_swap/checker
+circle2/so_long/so_long
+circle2/so_long/so_long_bonus
+circle3/minishell/minishell
+circle3/philosophers/philo/philo
+circle3/philosophers/philo_bonus/philo_bonus
+circle4/cub3d/cub3d_mandatory/cub3d
+circle4/cub3d/cub3d_bonus/cub3d_bonus
+circle5/webserv/webserv
+circle5/cpp09/ex00/btc
+circle5/cpp09/ex01/RPN
+circle5/cpp09/ex02/PmergeMe
+
+# Secrets (inception Docker secrets — keep placeholder files out)
+circle5/inception/secrets/**/*.txt
